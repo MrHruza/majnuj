@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="icon" type="image/png" href="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png">
+    
+    <title>Majnuj.eu - Náš Tým</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Montserrat:wght@600;700;800&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+        
+        /* ROZTAŽENÍ WEBU A NULOVÁNÍ BÍLÝCH OKRAJŮ */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            overflow-x: hidden;
+            background-color: #1f1f27;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* PEVNÁ HORNÍ LIŠTA (NAVBAR) */
+        .rybar-navbar-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100% !important;
+            height: 80px;
+            background-color: #1f1f27;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            box-sizing: border-box;
+            padding: 0 30px;
+        }
+
+        .rybar-navbar-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rybar-navbar-logo img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+        }
+
+        .rybar-navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-item {
+            color: #b5b9c4;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .nav-btn-shop {
+            background-color: #ffcc00;
+            color: #000000;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 12px 28px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .nav-btn-shop:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
+        }
+
+        /* Odsazení, aby lišta nepolykala začátky sekcí */
+        section {
+            scroll-margin-top: 80px; 
+        }
+
+        /* HERO SEKCE S POZADÍM */
+        .rybar-hero-section {
+            background: url('https://www.minecraft.net/content/dam/minecraftnet/archive/6581250e483233ceb023d260eef9ed6a-header.jpg') no-repeat center center;
+            background-size: cover;
+            min-height: 70vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding-top: 80px;
+            padding-bottom: 120px;
+        }
+
+        .rybar-hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 25px;
+            z-index: 2;
+        }
+
+        .rybar-hero-logo {
+            max-width: 100%;
+            width: 420px;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .rybar-hero-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .rybar-hero-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 70px;
+        }
+
+        .rybar-hero-wave .wave-fill {
+            fill: #1f1f27;
+        }
+
+        /* --- STYLY PRO SEKCI NÁŠ TÝM --- */
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* INFORMAČNÍ RECRUITMENT BOX */
+        .recruitment-box {
+            background: linear-gradient(135deg, rgba(240, 182, 56, 0.03) 0%, rgba(240, 182, 56, 0.08) 100%);
+            border: 1px solid rgba(240, 182, 56, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: -80px;
+            margin-bottom: 70px;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .recruitment-text-side {
+            flex: 1;
+            padding-right: 30px;
+        }
+
+        .recruitment-box h2 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            color: #ffffff;
+        }
+
+        .recruitment-box p {
+            color: #b5b9c4;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0 0 25px 0;
+        }
+
+        .btn-join {
+            display: inline-block;
+            background: #f0b638;
+            color: #1f1f27;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-join:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(240, 182, 56, 0.3);
+        }
+
+        .recruitment-visual-side img {
+            max-width: 150px;
+            height: auto;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        }
+
+        /* SEKCE JEDNOTLIVÝCH ROLÍ */
+        .role-section {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .role-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Barevné gradience pro jednotlivé role */
+        .role-section.role-majitel .role-title { background: linear-gradient(180deg, #ff6b6b, #cc3333); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-vedeni .role-title { background: linear-gradient(180deg, #f0b638, #b88214); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-admin .role-title { background: linear-gradient(180deg, #ff4757, #ff2a3a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-developer .role-title { background: linear-gradient(180deg, #e2098f, #b40973); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-technik .role-title { background: linear-gradient(180deg, #6353bd, #5142a1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-mod .role-title { background: linear-gradient(180deg, #1e90ff, #0072e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-helper .role-title { background: linear-gradient(180deg, #2ed573, #1abc9c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-builder .role-title { background: linear-gradient(180deg, #eccc68, #ffa502); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-eventer .role-title { background: linear-gradient(180deg, #9b59b6, #8e44ad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-creator .role-title { background: linear-gradient(180deg, #747d8c, #2f3542); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-grafik .role-title { background: linear-gradient(180deg, #fd79a8, #e84393); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .role-section.role-spoluprace .role-title { background: linear-gradient(180deg, #5ff3ff, #0984e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .role-subtitle {
+            color: #b5b9c4;
+            font-size: 0.95rem;
+            margin: 0 0 40px 0;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        /* GRID PRO KARTY ČLENŮ */
+        .members-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            width: 100%;
+        }
+
+        /* KARTA ČLENA */
+        .member-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01) 0%, rgba(255, 255, 255, 0.03) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            width: 260px;
+            padding: 35px 20px 25px 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 3D RENDER POSTAVIČKY */
+        .member-avatar-3d {
+            width: 120px;
+            height: 150px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+            transition: transform 0.3s;
+        }
+
+        .member-card:hover .member-avatar-3d {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        .member-avatar-3d img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .member-name {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+            color: #ffffff;
+        }
+
+        .member-date {
+            color: #656b8e;
+            font-size: 0.8rem;
+            margin: 0 0 20px 0;
+            font-weight: 600;
+        }
+
+        .member-discord-icon {
+            color: #5865F2;
+            font-size: 1.4rem;
+            transition: transform 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .member-discord-icon:hover {
+            transform: scale(1.2);
+        }
+
+        /* PODSEKCE PRO SPOLUPRÁCE (YT, TWITCH, KICK, TIKTOK) */
+        .sub-team-container {
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .sub-team-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sub-team-title::before, .sub-team-title::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sub-team-title.sub-yt { color: #ff0000; }
+        .sub-team-title.sub-yt::before, .sub-team-title.sub-yt::after { background: rgba(255, 0, 0, 0.3); }
+
+        .sub-team-title.sub-twitch { color: #a970ff; }
+        .sub-team-title.sub-twitch::before, .sub-team-title.sub-twitch::after { background: rgba(169, 112, 255, 0.3); }
+
+        .sub-team-title.sub-kick { color: #53fc18; }
+        .sub-team-title.sub-kick::before, .sub-team-title.sub-kick::after { background: rgba(83, 252, 24, 0.3); }
+
+        .sub-team-title.sub-tiktok { color: #00f2fe; }
+        .sub-team-title.sub-tiktok::before, .sub-team-title.sub-tiktok::after { background: rgba(0, 242, 254, 0.3); }
+
+
+        /* --- STYLOVÁNÍ PATIČKY (FOOTER) --- */
+        .main-footer {
+            background-color: #191920;
+            color: #ffffff;
+            padding: 40px 0 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .footer-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .brand-text h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text p {
+            margin: 2px 0 0 0;
+            font-size: 0.75rem;
+            color: #a0aec0;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-socials a {
+            color: #ffffff;
+            font-size: 1.3rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
+        }
+
+        .footer-socials a:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 50px;
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            margin: 0 0 20px 0;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-about p {
+            line-height: 1.6;
+            color: #cbd5e0;
+            margin: 0 0 15px 0;
+        }
+
+        .footer-about .class-disclaimer {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .footer-links ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #cbd5e0;
+        }
+
+        .footer-links ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: #ffffff;
+        }
+
+        .footer-legal p {
+            margin: 0 0 10px 0;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+
+        .footer-legal a {
+            color: #3182ce;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-legal a:hover {
+            color: #63b3ed;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* --- RESPONZIVITA --- */
+        @media (max-width: 992px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .rybar-navbar-menu { display: none; }
+            .recruitment-box { flex-direction: column; text-align: center; padding: 25px; margin-top: -40px; }
+            .recruitment-text-side { padding-right: 0; margin-bottom: 20px; }
+            .member-card { width: 100%; max-width: 280px; }
+            .footer-top-bar { flex-direction: column; gap: 20px; text-align: center; }
+            .footer-brand { flex-direction: column; gap: 10px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+        }
+    </style>
+
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="rybar-navbar-header">
+    <div class="rybar-navbar-container">
+        
+        <div class="rybar-navbar-logo">
+            <a href="#" onclick="scrollToSection(event, 'hero-section')">
+                <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Majnuj Logo" style="height: 50px; width: auto; border-radius: 8px;">
+            </a>
+        </div>
+
+        <nav class="rybar-navbar-menu">
+            <a href="#" onclick="scrollToSection(event, 'hero-section')" class="nav-item active">Domů</a>
+            <a href="#" onclick="scrollToSection(event, 'wiki-section')" class="nav-item">Wiki</a>
+            <a href="https://discord.gg/vasserv" target="_blank" class="nav-item">Discord</a>
+            <a href="#" onclick="scrollToSection(event, 'vote-section')" class="nav-item">Hlasování</a>
+            <a href="#" onclick="scrollToSection(event, 'pravidla-section')" class="nav-item">Pravidla</a>
+            <a href="#" onclick="scrollToSection(event, 'tym-section')" class="nav-item">Tým</a>
+        </nav>
+
+        <div class="rybar-navbar-action">
+            <a href="#" onclick="scrollToSection(event, 'obchod-section')" class="nav-btn-shop">Obchod</a>
+        </div>
+
+    </div>
+</header>
+
+<script>
+// Inteligentní skript pro přejíždění mezi sekcemi bez zasekávání na disku
+function scrollToSection(event, sectionId) {
+    event.preventDefault();
+    const section = document.getElementById(sectionId);
+    
+    if (section) {
+        // Pokud sekce na této stránce existuje, hladce na ni sjeď
+        section.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        // Pokud sekce neexistuje (jsme na jiné stránce), jdi na index.html s kotvou
+        window.location.href = 'index.html#' + sectionId;
+    }
+}
+</script>
+
+<section id="hero-section" class="rybar-hero-section">
+    <div class="rybar-hero-content">
+        
+        <div class="rybar-hero-logo-container">
+            <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Majnuj Logo" class="rybar-hero-logo">
+        </div>
+
+    </div>
+
+    <div class="rybar-hero-wave">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V60.26C1122.4,56.24,1053.31,110.59,985.66,92.83Z" class="wave-fill"></path>
+        </svg>
+    </div>
+</section>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Montserrat:wght@600;700;800&display=swap');
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+    /* ROZTAŽENÍ WEBU A NULOVÁNÍ BÍLÝCH OKRAJŮ */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        overflow-x: hidden;
+        background-color: #1f1f27;
+        font-family: 'Montserrat', sans-serif;
+        scroll-behavior: smooth; /* Plynulé posouvání stránek */
+    }
+
+    /* PEVNÁ HORNÍ LIŠTA (NAVBAR) */
+    .rybar-navbar-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100% !important;
+        height: 80px;
+        background-color: #1f1f27;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        box-sizing: border-box;
+        padding: 0 30px;
+    }
+
+    .rybar-navbar-container {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .rybar-navbar-logo img {
+        height: 42px;
+        width: auto;
+    }
+
+    .rybar-navbar-menu {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .nav-item {
+        color: #b5b9c4;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+
+    .nav-item:hover {
+        color: #ffffff;
+    }
+
+    .nav-item.active {
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .nav-btn-shop {
+        background-color: #ffcc00;
+        color: #000000;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 800;
+        padding: 12px 28px;
+        border-radius: 12px;
+        text-transform: uppercase;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .nav-btn-shop:hover {
+        background-color: #e6b800;
+        transform: scale(1.03);
+    }
+
+    /* Odsazení, aby lišta nepolykala začátky sekcí */
+    section {
+        scroll-margin-top: 80px; 
+    }
+
+    /* HERO SEKCE S POZADÍM */
+    .rybar-hero-section {
+        background: url('https://www.minecraft.net/content/dam/minecraftnet/archive/6581250e483233ceb023d260eef9ed6a-header.jpg') no-repeat center center;
+        background-size: cover;
+        min-height: 100vh;
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        padding-top: 80px; /* Kompenzace pro fixní lištu */
+        padding-bottom: 120px;
+    }
+
+    .rybar-hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 25px;
+        z-index: 2;
+    }
+
+    .rybar-hero-logo {
+        max-width: 100%;
+        width: 420px;
+        height: auto;
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+        animation: logoFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-12px); }
+        100% { transform: translateY(0px); }
+    }
+
+    .rybar-hero-play-btn {
+        font-family: 'Fredoka', sans-serif;
+        background-color: #f0b638;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 18px 45px;
+        border-radius: 16px;
+        box-shadow: 0 6px 0 #f0b638, 0 12px 25px rgba(0,0,0,0.25);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .rybar-hero-play-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 0 #f0b638, 0 15px 30px rgba(0,0,0,0.3);
+        filter: brightness(1.05);
+    }
+
+    .rybar-hero-play-btn:active {
+        transform: translateY(4px);
+        box-shadow: 0 2px 0 #f0b638, 0 5px 10px rgba(0,0,0,0.2);
+    }
+
+    .rybar-hero-ip-box {
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        padding: 10px 24px;
+        border-radius: 30px;
+        color: #1e3153;
+        font-size: 0.95rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.2s ease;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .rybar-hero-ip-box:hover {
+        background: rgba(255, 255, 255, 0.6);
+        transform: scale(1.03);
+    }
+
+    .rybar-hero-wave {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+    }
+
+    .rybar-hero-wave svg {
+        position: relative;
+        display: block;
+        width: calc(100% + 1.3px);
+        height: 70px;
+    }
+
+    .rybar-hero-wave .wave-fill {
+        fill: #1f1f27; /* Plynule navazuje na další světlou sekci */
+    }
+
+    /* RESPONSIVITA */
+    @media (max-width: 768px) {
+        .rybar-navbar-menu { gap: 12px; }
+        .nav-item { font-size: 0.85rem; }
+        .nav-btn-shop { padding: 8px 16px; font-size: 0.85rem; }
+        .rybar-hero-logo { width: 290px; }
+        .rybar-hero-play-btn { font-size: 1.2rem; padding: 14px 35px; }
+    }
+</style>
+
+<script>
+// Kopírování IP adresy
+function copyIpAddress() {
+    const ipText = "majnuj.eu";
+    navigator.clipboard.writeText(ipText).then(() => {
+        const textElement = document.getElementById("ip-text");
+        const originalText = textElement.textContent;
+        
+        textElement.textContent = "IP ZKOPÍROVÁNA!";
+        setTimeout(() => {
+            textElement.textContent = originalText;
+        }, 2000);
+    }).catch(err => {
+        console.error("Chyba při kopírování: ", err);
+    });
+}
+
+// Sledování pozice na webu a automatické rozsvěcování tlačítek v liště
+document.addEventListener("DOMContentLoaded", function() {
+    const sections = document.querySelectorAll("section[id]");
+    const navItems = document.querySelectorAll(".rybar-navbar-menu .nav-item, .nav-btn-shop");
+
+    window.addEventListener("scroll", () => {
+        let currentSectionId = "";
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            if (window.scrollY >= sectionTop) {
+                currentSectionId = section.getAttribute("id");
+            }
+        });
+
+        navItems.forEach(item => {
+            item.classList.remove("active");
+            if (item.getAttribute("href") === `#${currentSectionId}`) {
+                item.classList.add("active");
+            }
+        });
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+    <div class="team-container" id="tym-section">
+
+        <section class="recruitment-box">
+            <div class="recruitment-text-side">
+                <h2>U nás v týmu tě to bude bavit!</h2>
+                <p>Na serveru stále hledáme nové kvalitní členy. Myslíš si, že nám dokážeš svojí hodnotou přispět? Podej si nábor na discord serveru pomocí ticketu.</p>
+                <a href="https://discord.gg/vasserv" target="_blank" class="btn-join">Chci být součástí týmu!</a>
+            </div>
+            <div class="recruitment-visual-side">
+                <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Team Visual">
+            </div>
+        </section>
+
+        <div class="role-section role-majitel">
+            <h2 class="role-title">Majitel</h2>
+            <p class="role-subtitle">Zakladatelé serveru, kteří spojili své síly a vytvořili projekt Majnuj.eu.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/StemYk" alt="StemYk">
+                    </div>
+                    <h3 class="member-name">StemYk</h3>
+                    <p class="member-date">Členem od 21.03.2025</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="https://discord.com/users/ID_UZIVATELE" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/frendlyZ" alt="frendlyZ">
+                    </div>
+                    <h3 class="member-name">frendlyZ</h3>
+                    <p class="member-date">Členem od 21.03.2025</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="https://discord.com/users/ID_UZIVATELE" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-section role-vedeni">
+            <h2 class="role-title">Vedení</h2>
+            <p class="role-subtitle">Spolu s majiteli vedou server a rozhodují, kam se bude projekt dál ubírat.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/X-Steve" alt="Vedení">
+                    </div>
+                    <h3 class="member-name">VedeníNick</h3>
+                    <p class="member-date">Členem od --.--.----</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-section role-admin">
+            <h2 class="role-title">Admin</h2>
+            <p class="role-subtitle">Dohlížejí na hladký technický chod serveru a konfiguraci systémů.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/Alex" alt="Admin">
+                    </div>
+                    <h3 class="member-name">AdminNick</h3>
+                    <p class="member-date">Členem od --.--.----</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-section role-developer">
+            <h2 class="role-title">Developer</h2>
+            <p class="role-subtitle">Vytvářejí a vylepšují herní obsah a funkce.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/Alex" alt="Admin">
+                    </div>
+                    <h3 class="member-name">AdminNick</h3>
+                    <p class="member-date">Členem od --.--.----</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-section role-technik">
+            <h2 class="role-title">Technik</h2>
+            <p class="role-subtitle">Zajišťují technickou podporu serveru a řeší problémy s infrastrukturou.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/Alex" alt="Admin">
+                    </div>
+                    <h3 class="member-name">AdminNick</h3>
+                    <p class="member-date">Členem od --.--.----</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-section role-mod">
+            <h2 class="role-title">Moderátor</h2>
+            <p class="role-subtitle">Zajišťují pořádek vo hře, řeší spory a dohlížejí na Helpery.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/Steve" alt="Mod">
+                    </div>
+                    <h3 class="member-name">ModeratorNick</h3>
+                    <p class="member-date">Členem od --.--.----</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-section role-helper">
+            <h2 class="role-title">Helper</h2>
+            <p class="role-subtitle">Aktivně pomáhají hráčům v chatu a odpovídají na základní dotazy.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/Herobrine" alt="Helper">
+                    </div>
+                    <h3 class="member-name">HelperNick</h3>
+                    <p class="member-date">Členem od --.--.----</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-section role-builder">
+            <h2 class="role-title">Builder</h2>
+            <p class="role-subtitle">Tvoří mapy, spawny a starají se o estetickou stránku našich světů.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/Notch" alt="Builder">
+                    </div>
+                    <h3 class="member-name">BuilderNick</h3>
+                    <p class="member-date">Členem od --.--.----</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-section role-eventer">
+            <h2 class="role-title">Eventer</h2>
+            <p class="role-subtitle">Organizují komunitní eventy, minihry a starají se o zábavu hráčů.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/Jeb_" alt="Eventer">
+                    </div>
+                    <h3 class="member-name">EventerNick</h3>
+                    <p class="member-date">Členem od --.--.----</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-section role-creator">
+            <h2 class="role-title">Creator</h2>
+            <p class="role-subtitle">Vývojáři mechanik, doplňků a herních systémů na míru.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/C418" alt="Creator">
+                    </div>
+                    <h3 class="member-name">CreatorNick</h3>
+                    <p class="member-date">Členem od --.--.----</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-section role-grafik">
+            <h2 class="role-title">Grafik</h2>
+            <p class="role-subtitle">Kreslí textury, loga, rendery a starají se o vizuální tvář projektu.</p>
+            <div class="members-grid">
+                <div class="member-card">
+                    <div class="member-avatar-3d">
+                        <img src="https://visage.surgeplay.com/player/220/Toast" alt="Grafik">
+                    </div>
+                    <h3 class="member-name">GrafikNick</h3>
+                    <p class="member-date">Členem od --.--.----</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="height: 80px;"></div>
+        <section class="recruitment-box">
+            <div class="recruitment-text-side">
+                <h2>U nás v týmu tě to bude bavit!</h2>
+                <p>Na serveru stále hledáme nové kvalitní členy. Myslíš si, že nám dokážeš svojí hodnotou přispět? Podej si nábor na discord serveru pomocí ticketu.</p>
+                <a href="https://discord.gg/vasserv" target="_blank" class="btn-join">Chci být součástí týmu!</a>
+            </div>
+            <div class="recruitment-visual-side">
+                <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Team Visual">
+            </div>
+        </section>
+
+        <div class="role-section role-spoluprace">
+            <h2 class="role-title">Spolupráce Tým</h2>
+            <p class="role-subtitle">Naši partneři a tvůrci, kteří šíří povědomí o Majnuj.eu na sociálních sítích.</p>
+            
+            <div class="sub-team-container">
+                <div class="sub-team-title sub-yt"><i class="fa-brands fa-youtube"></i> Youtubeři</div>
+                <div class="members-grid">
+                    <div class="member-card">
+                        <div class="member-avatar-3d">
+                            <img src="https://visage.surgeplay.com/player/220/Dream" alt="YT">
+                        </div>
+                        <h3 class="member-name">YoutuberNick</h3>
+                        <p class="member-date">Partner od --.--.----</p>
+                        <div style="display: flex; gap: 20px;">
+                            <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                            <a href="#" target="_blank" class="fa-brands fa-youtube" style="color: #ff0000; font-size: 1.4rem; transition: transform 0.2s;" title="YouTube kanál" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-team-container">
+                <div class="sub-team-title sub-twitch"><i class="fa-brands fa-twitch"></i> Streameři (Twitch)</div>
+                <div class="members-grid">
+                    <div class="member-card">
+                        <div class="member-avatar-3d">
+                            <img src="https://visage.surgeplay.com/player/220/Shroud" alt="Twitch">
+                        </div>
+                        <h3 class="member-name">TwitchNick</h3>
+                        <p class="member-date">Partner od --.--.----</p>
+                        <div style="display: flex; gap: 20px;">
+                            <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                            <a href="#" target="_blank" class="fa-brands fa-twitch" style="color: #a970ff; font-size: 1.4rem; transition: transform 0.2s;" title="Twitch kanál" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-team-container">
+                <div class="sub-team-title sub-kick"><i class="fa-solid fa-k"></i> Streameři (Kick)</div>
+                <div class="members-grid">
+                    <div class="member-card">
+                        <div class="member-avatar-3d">
+                            <img src="https://visage.surgeplay.com/player/220/xQc" alt="Kick">
+                        </div>
+                        <h3 class="member-name">KickNick</h3>
+                        <p class="member-date">Partner od --.--.----</p>
+                        <div style="display: flex; gap: 20px;">
+                            <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                            <a href="#" target="_blank" class="fa-solid fa-k" style="color: #53fc18; font-size: 1.3rem; font-weight: 900; transition: transform 0.2s; text-decoration: none;" title="Kick kanál" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-team-container">
+                <div class="sub-team-title sub-tiktok"><i class="fa-brands fa-tiktok"></i> TikTokeři</div>
+                <div class="members-grid">
+                    <div class="member-card">
+                        <div class="member-avatar-3d">
+                            <img src="https://visage.surgeplay.com/player/220/Khaby" alt="TikTok">
+                        </div>
+                        <h3 class="member-name">TikTokNick</h3>
+                        <p class="member-date">Partner od --.--.----</p>
+                        <div style="display: flex; gap: 20px;">
+                            <a href="#" target="_blank" class="fa-brands fa-discord member-discord-icon" title="Discord profil"></a>
+                            <a href="#" target="_blank" class="fa-brands fa-tiktok" style="color: #00f2fe; font-size: 1.4rem; transition: transform 0.2s;" title="TikTok profil" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <style>
+        /* --- STYLOVÁNÍ PATIČKY (FOOTER) --- */
+        .main-footer {
+            background-color: #191920; /* Přesný tmavě modrý odstín z předlohy */
+            color: #ffffff;
+            padding: 40px 0 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* Horní lišta: Logo, Název a Sociální sítě */
+        .footer-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .brand-text h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text p {
+            margin: 2px 0 0 0;
+            font-size: 0.75rem;
+            color: #a0aec0;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Ikony sociálních sítí na pravé straně */
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-socials a {
+            color: #ffffff;
+            font-size: 1.3rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
+        }
+
+        .footer-socials a:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        /* Hlavní třísloupcový obsah */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 50px;
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            margin: 0 0 20px 0;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* 1. Sloupec: Popis webu */
+        .footer-about p {
+            line-height: 1.6;
+            color: #cbd5e0;
+            margin: 0 0 15px 0;
+        }
+
+        .footer-about .disclaimer {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* 2. Sloupec: Seznam odkazů (Navigace) */
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        /* Odrážka před textem */
+        .footer-links ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #cbd5e0;
+        }
+
+        .footer-links ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: #ffffff;
+        }
+
+        /* 3. Sloupec: Provozovatel */
+        .footer-legal p {
+            margin: 0 0 10px 0;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+
+        .footer-legal a {
+            color: #3182ce;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-legal a:hover {
+            color: #63b3ed;
+        }
+
+        .footer-legal .legal-doc {
+            display: block;
+            margin-top: 5px;
+            text-decoration: underline;
+        }
+
+        /* Spodní lišta s Copyrightem */
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* --- RESPONZIVITA (PRO MOBILY A TABLETY) --- */
+        @media (max-width: 992px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-top-bar {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .footer-brand {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            
+            <div class="footer-top-bar">
+                <div class="footer-brand">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Majnuj.eu Logo" class="footer-logo">
+                    <div class="brand-text">
+                        <h3>MAJNUJ.EU</h3>
+                        <p>JSME SERVER, KTERÝ MÁ ROZHODNĚ CO NABÍDNOUT.</p>
+                    </div>
+                </div>
+                
+                <div class="footer-socials">
+                    <a href="https://discord.com/invite/n7PsVuE2Pu" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="https://www.instagram.com/majnuj.eu/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@majnuj.eu" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.youtube.com/@MajnujEU" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-grid">
+                
+                <div class="footer-col footer-about">
+                    <h4>O MAJNUJ.EU</h4>
+                    <p>
+                        Majnuj.eu je server s bohatou historií a moderními technologiemi. Snažíme se o to, abychom vám nabídli skvělý zážitek ze hry a spoustu nezapomenutelných zážitků. U nás si můžeš zahrát Survival, Skyblock, Oneblock nebo naskočit do akčních PvP miniher. 🎮🚀
+                    </p>
+                    <p class="disclaimer">Nejedná se o oficiální produkt Minecraftu. Nejsme spojeni s Mojang Studios.</p>
+                </div>
+
+                <div class="footer-col footer-links">
+                    <h4>NAVIGACE</h4>
+                    <ul>
+                        <li><a href="#" onclick="scrollToSection(event, 'rybar-welcome-section')" class="nav-item">O Majnuj.eu</a></li>
+                        <li><a href="#" onclick="scrollToSection(event, 'rules-section')" class="nav-item">Pravidla</a></li>
+                        <li><a href="https://www.youtube.com/@MajnujEU">To nejlepší z Majnuj.eu</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col footer-legal">
+                    <h4>KONTAKTY</h4>
+                    <p></p>
+                    <p></p>
+                    <p>E-mail: <a href="mailto:xxxxxxxxxxx">xxxxxxxxxxx</a></p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2026 Majnuj.eu</p>
+            </div>
+
+        </div>
+    </footer>
+
+</body>
+</html>

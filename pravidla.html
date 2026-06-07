@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="icon" type="image/png" href="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png">
+    
+    <title>Majnuj.eu - Pravidla</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Montserrat:wght@600;700;800&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+        /* --- ROZTAŽENÍ WEBU A NULOVÁNÍ BÍLÝCH OKRAJŮ --- */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            overflow-x: hidden;
+            background-color: #1f1f27;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- PEVNÁ HORNÍ LIŠTA (NAVBAR) --- */
+        .rybar-navbar-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100% !important;
+            height: 80px;
+            background-color: #1f1f27;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            box-sizing: border-box;
+            padding: 0 30px;
+        }
+
+        .rybar-navbar-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rybar-navbar-logo img {
+            height: 42px;
+            width: auto;
+        }
+
+        .rybar-navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-item {
+            color: #b5b9c4;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .nav-btn-shop {
+            background-color: #ffcc00;
+            color: #000000;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 12px 28px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .nav-btn-shop:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
+        }
+
+        /* Odsazení pro sekce pod fixní lištou */
+        section {
+            scroll-margin-top: 80px; 
+        }
+
+        /* --- HERO SEKCE S POZADÍM --- */
+        .rybar-hero-section {
+            background: url('https://www.minecraft.net/content/dam/minecraftnet/archive/6581250e483233ceb023d260eef9ed6a-header.jpg') no-repeat center center;
+            background-size: cover;
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding-top: 80px; 
+            padding-bottom: 120px;
+        }
+
+        .rybar-hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 25px;
+            z-index: 2;
+        }
+
+        .rybar-hero-logo {
+            max-width: 100%;
+            width: 420px;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .rybar-hero-play-btn {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #f0b638;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 18px 45px;
+            border-radius: 16px;
+            box-shadow: 0 6px 0 #f0b638, 0 12px 25px rgba(0,0,0,0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .rybar-hero-play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #f0b638, 0 15px 30px rgba(0,0,0,0.3);
+            filter: brightness(1.05);
+        }
+
+        .rybar-hero-play-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #f0b638, 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .rybar-hero-ip-box {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            padding: 10px 24px;
+            border-radius: 30px;
+            color: #1e3153;
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+
+        .rybar-hero-ip-box:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(1.03);
+        }
+
+        .rybar-hero-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .rybar-hero-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 70px;
+        }
+
+        .rybar-hero-wave .wave-fill {
+            fill: #1f1f27; 
+        }
+
+        /* --- STYLOVÁNÍ SEKCÍ S PRAVIDLY --- */
+        .custom-rules-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .rules-main-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .rules-block {
+            background-color: #191920;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .rules-block h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffcc00;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .rules-sublist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .rules-sublist li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #cbd5e0;
+        }
+
+        .rules-sublist li::before {
+            content: "•";
+            position: absolute;
+            left: 10px;
+            color: #ffcc00;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .rules-sublist li strong {
+            color: #ffffff;
+        }
+
+        /* MEZERA PŘED FOOTEREM */
+        .rules-footer-spacer {
+            height: 80px;
+        }
+
+        /* --- STYLOVÁNÍ PATIČKY (FOOTER) --- */
+        .main-footer {
+            background-color: #191920; 
+            color: #ffffff;
+            padding: 40px 0 20px 0;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .footer-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .brand-text h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text p {
+            margin: 2px 0 0 0;
+            font-size: 0.75rem;
+            color: #a0aec0;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-socials a {
+            color: #ffffff;
+            font-size: 1.3rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
+        }
+
+        .footer-socials a:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 50px;
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            margin: 0 0 20px 0;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-about p {
+            line-height: 1.6;
+            color: #cbd5e0;
+            margin: 0 0 15px 0;
+        }
+
+        .footer-about .disclaimer {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .footer-links ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #cbd5e0;
+        }
+
+        .footer-links ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: #ffffff;
+        }
+
+        .footer-legal p {
+            margin: 0 0 10px 0;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+
+        .footer-legal a {
+            color: #3182ce;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-legal a:hover {
+            color: #63b3ed;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* --- RESPONSIVITA (PRO MOBILY A TABLETY) --- */
+        @media (max-width: 992px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rybar-navbar-menu { gap: 12px; }
+            .nav-item { font-size: 0.85rem; }
+            .nav-btn-shop { padding: 8px 16px; font-size: 0.85rem; }
+            .rybar-hero-logo { width: 290px; }
+            .rybar-hero-play-btn { font-size: 1.2rem; padding: 14px 35px; }
+            
+            .footer-top-bar {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .footer-brand {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="rybar-navbar-header">
+        <div class="rybar-navbar-container">
+            
+            <div class="rybar-navbar-logo">
+                <a href="#" onclick="scrollToSection(event, 'hero-section')">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Majnuj Logo" style="height: 50px; width: auto; border-radius: 8px;">
+                </a>
+            </div>
+
+            <nav class="rybar-navbar-menu">
+                <a href="#" onclick="scrollToSection(event, 'hero-section')" class="nav-item">Domů</a>
+                <a href="#" onclick="scrollToSection(event, 'wiki-section')" class="nav-item">Wiki</a>
+                <a href="https://discord.gg/vasserv" target="_blank" class="nav-item">Discord</a>
+                <a href="#" onclick="scrollToSection(event, 'vote-section')" class="nav-item">Hlasování</a>
+                <a href="#" onclick="scrollToSection(event, 'pravidla-section')" class="nav-item active">Pravidla</a>
+                <a href="#" onclick="scrollToSection(event, 'tym-section')" class="nav-item">Tým</a>
+            </nav>
+
+            <div class="rybar-navbar-action">
+                <a href="#" onclick="scrollToSection(event, 'obchod-section')" class="nav-btn-shop">Obchod</a>
+            </div>
+
+        </div>
+    </header>
+
+    <section id="hero-section" class="rybar-hero-section">
+        <div class="rybar-hero-content">
+            
+            <div class="rybar-hero-logo-container">
+                <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Majnuj Logo" class="rybar-hero-logo">
+            </div>
+
+        </div>
+
+        <div class="rybar-hero-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V60.26C1122.4,56.24,1053.31,110.59,985.66,92.83Z" class="wave-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section id="pravidla-section" class="custom-rules-container">
+        <h1 class="rules-main-title">Pravidla Serveru</h1>
+
+        <div class="rules-block">
+            <h2><i class="fa-solid fa-gavel"></i> Všeobecná pravidla</h2>
+            <ul class="rules-sublist">
+                <li><strong>Slušnost:</strong> Respektujte ostatní hráče a Admin Tým. Nadávky a toxické chování nebudou tolerovány.</li>
+                <li><strong>Hra:</strong> Je přísně zakázáno používat upravené klienty, cheaty, X-Ray nebo hacky.</li>
+                <li><strong>Chyby:</strong> Zneužívání chyb (bugů) hry je zakázáno, chyby neprodleně nahlaste týmu.</li>
+            </ul>
+        </div>
+
+        <div class="rules-block">
+            <h2><i class="fa-solid fa-comments"></i> Pravidla chatu</h2>
+            <ul class="rules-sublist">
+                <li><strong>Spam:</strong> Nepište opakovaně stejné zprávy a nepoužívejte zbytečně moc CAPS LOCKU.</li>
+                <li><strong>Reklama:</strong> Propagování cizích Minecraft serverů nebo neoficiálních webových odkazů je zakázáno.</li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="rules-footer-spacer"></div>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            
+            <div class="footer-top-bar">
+                <div class="footer-brand">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Majnuj.eu Logo" class="footer-logo">
+                    <div class="brand-text">
+                        <h3>MAJNUJ.EU</h3>
+                        <p>JSME SERVER, KTERÝ MÁ ROZHODNĚ CO NABÍDNOUT.</p>
+                    </div>
+                </div>
+                
+                <div class="footer-socials">
+                    <a href="https://discord.com/invite/n7PsVuE2Pu" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="https://www.instagram.com/majnuj.eu/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@majnuj.eu" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.youtube.com/@MajnujEU" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-grid">
+                
+                <div class="footer-col footer-about">
+                    <h4>O MAJNUJ.EU</h4>
+                    <p>
+                        Majnuj.eu je server s bohatou historií a moderními technologiemi. Snažíme se o to, abychom vám nabídli skvělý zážitek ze hry a spoustu nezapomenutelných zážitků. U nás si můžeš zahrát Survival, Skyblock, Oneblock nebo naskočit do akčních PvP miniher. 🎮🚀
+                    </p>
+                    <p class="disclaimer">Nejedná se o oficiální produkt Minecraftu. Nejsme spojeni s Mojang Studios.</p>
+                </div>
+
+                <div class="footer-col footer-links">
+                    <h4>NAVIGACE</h4>
+                    <ul>
+                        <li><a href="#" onclick="scrollToSection(event, 'rybar-welcome-section')" class="nav-item">O Majnuj.eu</a></li>
+                        <li><a href="#" onclick="scrollToSection(event, 'rules-section')" class="nav-item">Pravidla</a></li>
+                        <li><a href="https://www.youtube.com/@MajnujEU">To nejlepší z Majnuj.eu</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col footer-legal">
+                    <h4>KONTAKTY</h4>
+                    <p></p>
+                    <p></p>
+                    <p>E-mail: <a href="mailto:xxxxxxxxxxx">xxxxxxxxxxx</a></p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2026 Majnuj.eu</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+    // Inteligentní skript pro přejíždění mezi sekcemi
+    function scrollToSection(event, sectionId) {
+        event.preventDefault();
+        const section = document.getElementById(sectionId);
+        
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            window.location.href = 'index.html#' + sectionId;
+        }
+    }
+
+    // Kopírování IP adresy
+    function copyIpAddress() {
+        const ipText = "majnuj.eu";
+        navigator.clipboard.writeText(ipText).then(() => {
+            const textElement = document.getElementById("ip-text");
+            const originalText = textElement.textContent;
+            
+            textElement.textContent = "IP ZKOPÍROVÁNA!";
+            setTimeout(() => {
+                textElement.textContent = originalText;
+            }, 2000);
+        }).catch(err => {
+            console.error("Chyba při kopírování: ", err);
+        });
+    }
+
+    // Sledování aktivních sekcí na webu
+    document.addEventListener("DOMContentLoaded", function() {
+        const sections = document.querySelectorAll("section[id]");
+        const navItems = document.querySelectorAll(".rybar-navbar-menu .nav-item, .nav-btn-shop");
+
+        window.addEventListener("scroll", () => {
+            let currentSectionId = "";
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    currentSectionId = section.getAttribute("id");
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove("active");
+                if (item.getAttribute("href") === `#${currentSectionId}`) {
+                    item.classList.add("active");
+                }
+            });
+        });
+    });
+    </script>
+
+</body>
+</html>
