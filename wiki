@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link class="favicon" rel="icon" type="image/png" href="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png">
+    
+    <title>Majnuj.eu - Wiki</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Montserrat:wght@500;600;700;800&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+        /* --- ZÁKLADNÍ NASTAVENÍ --- */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            background-color: #16161c; 
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            scroll-behavior: smooth;
+        }
+
+        /* --- PEVNÁ HORNÍ LIŠTA (NAVBAR) --- */
+        .rybar-navbar-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100% !important;
+            height: 80px;
+            background-color: #1f1f27;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            box-sizing: border-box;
+            padding: 0 30px;
+        }
+
+        .rybar-navbar-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rybar-navbar-logo img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+        }
+
+        .rybar-navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-item {
+            color: #b5b9c4;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            color: #f0b638; 
+            font-weight: 700;
+        }
+
+        .nav-btn-shop {
+            background-color: #f0b638;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 12px 28px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            box-shadow: 0 3px 0 #d49f2c;
+        }
+
+        .nav-btn-shop:hover {
+            transform: scale(1.03);
+        }
+
+        /* --- HLAVNÍ NADPIS A VYHLEDÁVÁNÍ (WIKI HERO) --- */
+        .wiki-hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .wiki-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 3.5rem;
+            margin: 0 0 10px 0;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .wiki-hero p {
+            color: #f0b638;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 30px 0;
+        }
+
+        .wiki-search-container {
+            position: relative;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .wiki-search-input {
+            width: 100%;
+            background-color: #111116;
+            border: 2px solid #1f1f2e;
+            border-radius: 30px;
+            padding: 15px 55px 15px 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #ffffff;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .wiki-search-input:focus {
+            border-color: #f0b638;
+            box-shadow: 0 0 15px rgba(240, 182, 56, 0.2);
+        }
+
+        .wiki-search-input::placeholder {
+            color: #4a5568;
+        }
+
+        .wiki-search-icon {
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .wiki-search-input:focus + .wiki-search-icon {
+            color: #f0b638;
+        }
+
+        /* --- OBSAH WIKI STRÁNKY --- */
+        .wiki-page-wrapper {
+            padding-top: 150px; 
+            padding-bottom: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Statistiky nahoře */
+        .wiki-stats-bar {
+            background: linear-gradient(90deg, #1f1f3d 0%, #17172b 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            color: #cbd5e0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .wiki-stats-bar a {
+            color: #7c4dff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Mřížka pro karty */
+        .wiki-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        /* Jednotlivá karta */
+        .wiki-card {
+            background-color: #1f1f2e;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Banner karty */
+        .wiki-card-header {
+            position: relative;
+            padding: 25px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .wiki-card-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+
+        .wiki-card-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            z-index: 2;
+        }
+
+        .wiki-card-header-text {
+            z-index: 2;
+        }
+
+        .wiki-card-header-text h2 {
+            margin: 0 0 5px 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .wiki-card-header-text p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: #cbd5e0;
+            line-height: 1.4;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        /* Obsah karty */
+        .wiki-card-body {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            flex-grow: 1;
+        }
+
+        .wiki-link-item {
+            color: #a0aec0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .wiki-link-item:hover {
+            color: #ffffff;
+        }
+
+        .wiki-link-item i {
+            font-size: 0.8rem;
+            color: #4a5568;
+        }
+
+        /* Spodek karty */
+        .wiki-card-footer {
+            padding: 0 25px 25px 25px;
+        }
+
+        .wiki-btn-show-all {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #111116;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .wiki-btn-show-all:hover {
+            transform: translateY(-2px);
+            background-color: #f0b638;
+            color: #ffffff;
+        }
+
+        /* --- STYLOVÁNÍ TVÉ PATIČKY (FOOTER) --- */
+        .main-footer {
+            background-color: #191920; 
+            color: #ffffff;
+            padding: 40px 0 20px 0;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .footer-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .brand-text h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text p {
+            margin: 2px 0 0 0;
+            font-size: 0.75rem;
+            color: #a0aec0;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-socials a {
+            color: #ffffff;
+            font-size: 1.3rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
+        }
+
+        .footer-socials a:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            margin: 0 0 20px 0;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-about p {
+            line-height: 1.6;
+            color: #cbd5e0;
+            margin: 0 0 15px 0;
+        }
+
+        .footer-about .disclaimer {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .footer-links ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #cbd5e0;
+        }
+
+        .footer-links ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: #ffffff;
+        }
+
+        .footer-legal p {
+            margin: 0 0 10px 0;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+
+        .footer-legal a {
+            color: #3182ce;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-legal a:hover {
+            color: #63b3ed;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* --- RESPONZIVITA PRO MOBILY A TABLETY --- */
+        @media (max-width: 992px) {
+            .wiki-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .wiki-hero h1 {
+                font-size: 2.5rem;
+            }
+            .wiki-stats-bar {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .footer-top-bar {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .footer-brand {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="rybar-navbar-header">
+        <div class="rybar-navbar-container">
+            
+            <div class="rybar-navbar-logo">
+                <a href="/">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Majnuj Logo">
+                </a>
+            </div>
+
+            <nav class="rybar-navbar-menu">
+                <a href="/" class="nav-item">Domů</a>
+                <a href="/wiki" class="nav-item active">Wiki</a>
+                <a href="https://discord.gg/vasserv" target="_blank" class="nav-item">Discord</a>
+                <a href="/pravidla" class="nav-item">Pravidla</a>
+                <a href="/tym" class="nav-item">Tým</a>
+            </nav>
+
+            <div class="rybar-navbar-action">
+                <a href="https://majnuj.eu/obchod" class="nav-btn-shop">Obchod</a>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="wiki-page-wrapper">
+
+        <div class="wiki-hero">
+            <h1>WIKIPEDIE</h1>
+            <p>Všechny informace o serveru na jednom místě a přehledně!</p>
+            <div class="wiki-search-container">
+                <input type="text" id="wikiSearch" class="wiki-search-input" placeholder="Zde napiš co hledáš (např. survival, oneblock, enchanty)...">
+                <i class="fa-solid fa-magnifying-glass wiki-search-icon"></i>
+            </div>
+        </div>
+
+        <div class="wiki-stats-bar">
+            <div>Pokud něco nenajdeš, neváhej nám napsat na Discord!</div>
+            <div>Wiki Majnuj.eu</div>
+        </div>
+
+        <div class="wiki-grid" id="wikiGrid">
+
+            <div class="wiki-card" data-tags="vseobecne general enchanty predmety chestshop bossove levely boostery">
+                <div class="wiki-card-header" style="background-image: url('https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png');">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" class="wiki-card-logo" alt="Logo">
+                    <div class="wiki-card-header-text">
+                        <h2>Všeobecné</h2>
+                        <p>Věci které nalezneš na každém serveru. Enchanty, chestshop, level systém, bossové, itemy a podobně.</p>
+                    </div>
+                </div>
+                <div class="wiki-card-body">
+                    <a href="/wiki/enchantu" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Custom enchanty a jejich použití</a>
+                    <a href="/wiki/afk-zona" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Afk zona</a>
+                    <a href="/wiki/levely-boostery" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Level systém a boostery</a>
+                    <a href="/wiki/pyrofishing" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Pyrofishing</a>
+                    <a href="/wiki/pyrofarming" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Pyrofarming</a>
+                    <a href="/wiki/pyromining" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Pyromining</a>
+                    <a href="/wiki/chestshop" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Chest shop</a>
+                    <a href="/wiki/výtahy" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Výtahy</a>
+                </div>
+                <div class="wiki-card-footer">
+                    <a href="/wiki/vseobecne" class="wiki-btn-show-all">Zobrazit vše</a>
+                </div>
+            </div>
+
+            <div class="wiki-card" data-tags="survival survko residenci rezky rezidence boss runy magicke">
+                <div class="wiki-card-header" style="background-image: url('https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png');">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" class="wiki-card-logo" alt="Logo">
+                    <div class="wiki-card-header-text">
+                        <h2>Survival</h2>
+                        <p>Zde nalezneš návody určené výhradně pro server Survival.</p>
+                    </div>
+                </div>
+                <div class="wiki-card-body">
+                    <a href="/wiki/survival-info" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> O čem je survival mód</a>
+                    <a href="/wiki/survival-reska" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Nastavení resky</a>
+                    <a href="/wiki/survival-peti" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Peti</a>
+                    <a href="/wiki/survival-bossove" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Bossové a mobky</a>
+                    <a href="/wiki/survival-dungeony-areny" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Boss areny & Dungeony</a>  
+                    <a href="/wiki/survival-recepty" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Recepty</a>   
+                </div>
+                <div class="wiki-card-footer">
+                    <a href="/wiki/survival" class="wiki-btn-show-all">Zobrazit vše</a>
+                </div>
+            </div>
+
+            <div class="wiki-card" data-tags="oneblock ob minioni spolecnici ostrov kamaradi alkohol">
+                <div class="wiki-card-header" style="background-image: url('https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png');">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" class="wiki-card-logo" alt="Logo">
+                    <div class="wiki-card-header-text">
+                        <h2>Oneblock</h2>
+                        <p>Zde nalezneš návody určené výhradně pro server Oneblock.</p>
+                    </div>
+                </div>
+                <div class="wiki-card-body">
+                    <a href="/wiki/oneblock-info" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> O čem je oneblock mód</a>
+                    <a href="/wiki/oneblock-nastaveni" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Nastavení ostrova</a>
+                    <a href="/wiki/oneblock-minioni" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Minioni & Peti</a>
+                    <a href="/wiki/oneblock-bossove" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Bossové a mobky</a>
+                    <a href="/wiki/oneblock-dungeony-areny" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Boss areny & Dungeony</a>    
+                    <a href="/wiki/oneblock-recepty" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Recepty</a>   
+                </div>
+                <div class="wiki-card-footer">
+                    <a href="/wiki/oneblock" class="wiki-btn-show-all">Zobrazit vše</a>
+                </div>
+            </div>
+
+            <div class="wiki-card" data-tags="skyblock sb minioni ostrov kamaradi alkohol generator">
+                <div class="wiki-card-header" style="background-image: url('https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png');">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" class="wiki-card-logo" alt="Logo">
+                    <div class="wiki-card-header-text">
+                        <h2>Skyblock</h2>
+                        <p>Zde nalezneš návody určené výhradně pro server Skyblock.</p>
+                    </div>
+                </div>
+                <div class="wiki-card-body">
+                    <a href="/wiki/skyblock-info" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> O čem je skyblock mód</a>
+                    <a href="/wiki/skyblock-nastaveni" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Nastavení ostrova</a>
+                    <a href="/wiki/skyblock-minioni" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Minioni & Peti</a>
+                    <a href="/wiki/skyblock-bossove" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Bossové & Mobky</a>
+                    <a href="/wiki/skyblock-dungeony-areny" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Boss areny & Dungeony</a>
+                    <a href="/wiki/skyblock-recepty" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Recepty</a>     
+                </div>
+                <div class="wiki-card-footer">
+                    <a href="/wiki/skyblock" class="wiki-btn-show-all">Zobrazit vše</a>
+                </div>
+            </div>
+
+            <div class="wiki-card" data-tags="eggwars ew vajicka pvp teamy minihra kit">
+                <div class="wiki-card-header" style="background-image: url('https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png');">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" class="wiki-card-logo" alt="Logo">
+                    <div class="wiki-card-header-text">
+                        <h2>EggWars</h2>
+                        <p>Zde nalezneš návody určené výhradně pro server EggWars.</p>
+                    </div>
+                </div>
+                <div class="wiki-card-body">
+                    <a href="/wiki/eggwars-info" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> O čem je EggWars mód</a>
+                    <a href="/wiki/eggwars-kity" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Kity a vylepšení</a>
+                    <a href="/wiki/eggwars-kosmetika" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Kosmetické doplňky</a>
+                    <a href="/wiki/eggwars-mapy" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Přehled map</a>
+                </div>
+                <div class="wiki-card-footer">
+                    <a href="/wiki/eggwars" class="wiki-btn-show-all">Zobrazit vše</a>
+                </div>
+            </div>
+
+            <div class="wiki-card" data-tags="knockback ffa kbffa pvp areny mece kity odhazovani">
+                <div class="wiki-card-header" style="background-image: url('https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png');">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" class="wiki-card-logo" alt="Logo">
+                    <div class="wiki-card-header-text">
+                        <h2>Knockback FFA</h2>
+                        <p>Zde nalezneš návody určené výhradně pro server Knockback FFA.</p>
+                    </div>
+                </div>
+                <div class="wiki-card-body">
+                    <a href="/wiki/kbffa-info" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Pravidla a jak hrát KB FFA</a>
+                    <a href="/wiki/kbffa-shopy" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Předměty v obchodu</a>
+                    <a href="/wiki/kbffa-kosmetika" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Kosmetické doplňky</a>
+                    <a href="/wiki/kbffa-mapy" class="wiki-link-item"><i class="fa-solid fa-file-lines"></i> Přehled map</a>
+                </div>
+                <div class="wiki-card-footer">
+                    <a href="/wiki/knockback-ffa" class="wiki-btn-show-all">Zobrazit vše</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            
+            <div class="footer-top-bar">
+                <div class="footer-brand">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Majnuj.eu Logo" class="footer-logo">
+                    <div class="brand-text">
+                        <h3>MAJNUJ.EU</h3>
+                        <p>JSME SERVER, KTERÝ MÁ ROZHODNĚ CO NABÍDNOUT.</p>
+                    </div>
+                </div>
+                
+                <div class="footer-socials">
+                    <a href="https://discord.com/invite/n7PsVuE2Pu" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="https://www.instagram.com/majnuj.eu/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@majnuj.eu" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.youtube.com/@MajnujEU" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-grid">
+                
+                <div class="footer-col footer-about">
+                    <h4>O MAJNUJ.EU</h4>
+                    <p>
+                        Majnuj.eu je server s bohatou historií a moderními technologiemi. Snažíme se o to, abychom vám nabídli skvělý zážitek ze hry a spoustu nezapomenutelných zážitků. U nás si můžeš zahrát Survival, Skyblock, Oneblock nebo naskočit do akčních PvP miniher. 🎮🚀
+                    </p>
+                    <p class="disclaimer">Nejedná se o oficiální produkt Minecraftu. Nejsme spojeni s Mojang Studios.</p>
+                </div>
+
+                <div class="footer-col footer-links">
+                    <h4>NAVIGACE</h4>
+                    <ul>
+                        <li><a href="/">O Majnuj.eu</a></li>
+                        <li><a href="/pravidla">Pravidla</a></li>
+                        <li><a href="https://www.youtube.com/@MajnujEU" target="_blank">To nejlepší z Majnuj.eu</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col footer-legal">
+                    <h4>KONTAKTY</h4>
+                    <p>E-mail: <a href="mailto:xxxxxxxxxxx">xxxxxxxxxxx</a></p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2026 Majnuj.eu</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('wikiSearch').addEventListener('input', function(e) {
+            // Převedení textu na malá písmena a odstranění diakritiky pro lepší hledání
+            let searchValue = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            let cards = document.querySelectorAll('.wiki-card');
+            
+            cards.forEach(function(card) {
+                // Získání tagů a textu z karty
+                let tags = card.getAttribute('data-tags').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                let title = card.querySelector('h2').innerText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                let bodyText = card.querySelector('.wiki-card-body').innerText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                
+                // Pokud vyhledávané slovo odpovídá názvu, tagům nebo textu uvnitř, kartu zobrazíme
+                if (title.includes(searchValue) || tags.includes(searchValue) || bodyText.includes(searchValue)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
