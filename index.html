@@ -967,13 +967,103 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-    // 2. NAČÍTÁNÍ TOP 3 PODLE VYBRANÉHO PORTÁLU
+// 2. NAČÍTÁNÍ TOP 3 PODLE VYBRANÉHO PORTÁLU
     
     // !!! ZDE SI UPRAV SVÁ UNIKÁTNÍ API ID PRO KAŽDÝ PORTÁL !!!
     const API_URLS = {
         craftlist: 'https://api.craftlist.org/v1/server/3e0710cb-96f5-4330-96dc-b98ac8832b02/votes',
         czechcraft: 'https://czech-craft.eu/api/server/majnuj-eu/voters/current_month/', // Příklad URL pro CzechCraft
-        mcservery: 'https://minecraftservery
+        mcservery: 'https://minecraftservery.eu/api/v1/server/majnuj-eu/votes' // Příklad URL pro MCServery
+    };
+
+    const podiumContainer = document.getElementById('vote-top3-podium');
+    const switcherButtons = document.querySelectorAll('.switcher-btn');
+
+    async function fetchAndRenderPodium(portalKey) {
+        podiumContainer.innerHTML = '<div class="mini-podium-loading">Načítání žebříčku...</div>';
+        
+        const url = API_URLS[portalKey];
+        
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error();
+            const result = await response.json();
+            
+            let rawData = [];
+            
+            // Každé API vrací data trochu jinak, proto je musíme sjednotit:
+            if (portalKey === 'craftlist' && result.success) {
+                rawData = result.data;
+            } else if (portalKey === 'czechcraft') {
+                // Czech-craft API struktura (přizpůsob podle reálných dat)
+                rawData = result.map(p => ({ player_name: p.username, votes_total: p.votes }));
+            } else if (portalKey === 'mcservery') {
+                // MinecraftServery API struktura (přizpůsob podle reálných dat)
+                rawData = result.votes || result; 
+            }
+
+            if (!rawData || rawData.length === 0) {
+                podiumContainer.innerHTML = '<div class="mini-podium-loading">Žádná data pro tento měsíc</div>';
+                return;
+            }
+
+            // Vezmeme TOP 3
+            const top3 = rawData.slice(0, 3);
+            const slots = [
+                top3[0] || { player_name: '---', votes_total: 0 },
+                top3[1] || { player_name: '---', votes_total: 0 },
+                top3[2] || { player_name: '---', votes_total: 0 }
+            ];
+
+            podiumContainer.innerHTML = `
+                <div class="mini-podium-card m-rank-1">
+                    <div class="mini-podium-medal">🥇</div>
+                    <div class="mini-podium-avatar">
+                        <img src="${slots[0].player_name !== '---' ? 'https://mc-heads.net/avatar/' + slots[0].player_name + '/40' : 'https://cdn.prod.website-files.com/68828d32a4fb4696477cfc1e/695a6fa31451ea9b96070b62_steve.jpg'}" alt="1st">
+                    </div>
+                    <div class="mini-podium-name">${slots[0].player_name}</div>
+                    <div class="mini-podium-score">${slots[0].votes_total} hl.</div>
+                </div>
+
+                <div class="mini-podium-card m-rank-2">
+                    <div class="mini-podium-medal">🥈</div>
+                    <div class="mini-podium-avatar">
+                        <img src="${slots[1].player_name !== '---' ? 'https://mc-heads.net/avatar/' + slots[1].player_name + '/40' : 'https://cdn.prod.website-files.com/68828d32a4fb4696477cfc1e/695a6fa31451ea9b96070b62_steve.jpg'}" alt="2nd">
+                    </div>
+                    <div class="mini-podium-name">${slots[1].player_name}</div>
+                    <div class="mini-podium-score">${slots[1].votes_total} hl.</div>
+                </div>
+
+                <div class="mini-podium-card m-rank-3">
+                    <div class="mini-podium-medal">🥉</div>
+                    <div class="mini-podium-avatar">
+                        <img src="${slots[2].player_name !== '---' ? 'https://mc-heads.net/avatar/' + slots[2].player_name + '/40' : 'https://cdn.prod.website-files.com/68828d32a4fb4696477cfc1e/695a6fa31451ea9b96070b62_steve.jpg'}" alt="3rd">
+                    </div>
+                    <div class="mini-podium-name">${slots[2].player_name}</div>
+                    <div class="mini-podium-score">${slots[2].votes_total} hl.</div>
+                </div>
+            `;
+
+        } catch (error) {
+            podiumContainer.innerHTML = '<div class="mini-podium-error">❌ Nepodařilo se načíst data z portálu.</div>';
+        }
+    }
+
+    // Obsluha klikání na tlačítka přepínače
+    switcherButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            switcherButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const portal = this.getAttribute('data-portal');
+            fetchAndRenderPodium(portal);
+        });
+    });
+
+    // První načtení (výchozí je CraftList)
+    fetchAndRenderPodium('craftlist');
+});
+</script>
 
 
 
