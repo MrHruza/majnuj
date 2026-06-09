@@ -548,10 +548,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-
-
-
-
 <section id="vote-section" class="vote-main-container">
     <div class="vote-wrapper">
         
@@ -813,7 +809,6 @@ document.addEventListener("DOMContentLoaded", function() {
         color: #ffffff;
     }
 
-    /* STYL PRO PŘEPÍNAČ PORTÁLŮ */
     .portal-switcher {
         display: flex;
         justify-content: center;
@@ -856,7 +851,6 @@ document.addEventListener("DOMContentLoaded", function() {
         border-radius: 4px; 
     }
 
-    /* STYLY PRO PÓDIUM */
     .mini-podium-container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -967,13 +961,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-// 2. NAČÍTÁNÍ TOP 3 PODLE VYBRANÉHO PORTÁLU
+    // 2. NAČÍTÁNÍ TOP 3 PODLE VYBRANÉHO PORTÁLU
     
     // !!! ZDE SI UPRAV SVÁ UNIKÁTNÍ API ID PRO KAŽDÝ PORTÁL !!!
     const API_URLS = {
         craftlist: 'https://api.craftlist.org/v1/server/3e0710cb-96f5-4330-96dc-b98ac8832b02/votes',
-        czechcraft: 'https://czech-craft.eu/api/server/majnuj-eu/voters/current_month/', // Příklad URL pro CzechCraft
-        mcservery: 'https://minecraftservery.eu/api/v1/server/majnuj-eu/votes' // Příklad URL pro MCServery
+        czechcraft: 'https://czech-craft.eu/api/server/majnuj-eu/voters/current_month/', 
+        mcservery: 'https://minecraftservery.eu/api/v1/server/majnuj-eu/votes' 
     };
 
     const podiumContainer = document.getElementById('vote-top3-podium');
@@ -991,15 +985,16 @@ document.addEventListener('DOMContentLoaded', function() {
             
             let rawData = [];
             
-            // Každé API vrací data trochu jinak, proto je musíme sjednotit:
+            // Sjednocení odlišných struktur API jednotlivých portálů
             if (portalKey === 'craftlist' && result.success) {
-                rawData = result.data;
+                rawData = result.data.map(p => ({ player_name: p.player_name, votes_total: p.votes_total }));
             } else if (portalKey === 'czechcraft') {
-                // Czech-craft API struktura (přizpůsob podle reálných dat)
-                rawData = result.map(p => ({ player_name: p.username, votes_total: p.votes }));
+                if (Array.isArray(result)) {
+                    rawData = result.map(p => ({ player_name: p.username, votes_total: p.votes }));
+                }
             } else if (portalKey === 'mcservery') {
-                // MinecraftServery API struktura (přizpůsob podle reálných dat)
-                rawData = result.votes || result; 
+                const votesArray = result.votes || (Array.isArray(result) ? result : []);
+                rawData = votesArray.map(p => ({ player_name: p.username, votes_total: p.votes }));
             }
 
             if (!rawData || rawData.length === 0) {
@@ -1007,37 +1002,48 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Vezmeme TOP 3
-            const top3 = rawData.slice(0, 3);
+            // Seřazení pro jistotu od nejvyššího počtu hlasů po nejnižší
+            rawData.sort((a, b) => b.votes_total - a.votes_total);
+
+            // Výběr TOP 3 pozic, pokud hráč chybí, dosadí se prázdný slot
             const slots = [
-                top3[0] || { player_name: '---', votes_total: 0 },
-                top3[1] || { player_name: '---', votes_total: 0 },
-                top3[2] || { player_name: '---', votes_total: 0 }
+                rawData[0] || { player_name: '---', votes_total: 0 },
+                rawData[1] || { player_name: '---', votes_total: 0 },
+                rawData[2] || { player_name: '---', votes_total: 0 }
             ];
 
-            podiumContainer.innerHTML = `
-                <div class="mini-podium-card m-rank-1">
-                    <div class="mini-podium-medal">🥇</div>
-                    <div class="mini-podium-avatar">
-                        <img src="${slots[0].player_name !== '---' ? 'https://mc-heads.net/avatar/' + slots[0].player_name + '/40' : 'https://cdn.prod.website-files.com/68828d32a4fb4696477cfc1e/695a6fa31451ea9b96070b62_steve.jpg'}" alt="1st">
-                    </div>
-                    <div class="mini-podium-name">${slots[0].player_name}</div>
-                    <div class="mini-podium-score">${slots[0].votes_total} hl.</div>
-                </div>
+            // Funkce pro generování odkazu na texturu hlavy
+            const getAvatar = (name) => {
+                if (!name || name === '---') {
+                    return 'https://cdn.prod.website-files.com/68828d32a4fb4696477cfc1e/695a6fa31451ea9b96070b62_steve.jpg';
+                }
+                return `https://mc-heads.net/avatar/${name}/40`;
+            };
 
+            // Vykreslení upravené struktury pódia (Pořadí: 2. místo, 1. místo, 3. místo kvůli vizuálnímu rozložení CSS)
+            podiumContainer.innerHTML = `
                 <div class="mini-podium-card m-rank-2">
                     <div class="mini-podium-medal">🥈</div>
                     <div class="mini-podium-avatar">
-                        <img src="${slots[1].player_name !== '---' ? 'https://mc-heads.net/avatar/' + slots[1].player_name + '/40' : 'https://cdn.prod.website-files.com/68828d32a4fb4696477cfc1e/695a6fa31451ea9b96070b62_steve.jpg'}" alt="2nd">
+                        <img src="${getAvatar(slots[1].player_name)}" alt="2nd">
                     </div>
                     <div class="mini-podium-name">${slots[1].player_name}</div>
                     <div class="mini-podium-score">${slots[1].votes_total} hl.</div>
                 </div>
 
+                <div class="mini-podium-card m-rank-1">
+                    <div class="mini-podium-medal">🥇</div>
+                    <div class="mini-podium-avatar">
+                        <img src="${getAvatar(slots[0].player_name)}" alt="1st">
+                    </div>
+                    <div class="mini-podium-name">${slots[0].player_name}</div>
+                    <div class="mini-podium-score">${slots[0].votes_total} hl.</div>
+                </div>
+
                 <div class="mini-podium-card m-rank-3">
                     <div class="mini-podium-medal">🥉</div>
                     <div class="mini-podium-avatar">
-                        <img src="${slots[2].player_name !== '---' ? 'https://mc-heads.net/avatar/' + slots[2].player_name + '/40' : 'https://cdn.prod.website-files.com/68828d32a4fb4696477cfc1e/695a6fa31451ea9b96070b62_steve.jpg'}" alt="3rd">
+                        <img src="${getAvatar(slots[2].player_name)}" alt="3rd">
                     </div>
                     <div class="mini-podium-name">${slots[2].player_name}</div>
                     <div class="mini-podium-score">${slots[2].votes_total} hl.</div>
@@ -1046,6 +1052,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         } catch (error) {
             podiumContainer.innerHTML = '<div class="mini-podium-error">❌ Nepodařilo se načíst data z portálu.</div>';
+            console.error("Chyba při načítání API hlasování:", error);
         }
     }
 
@@ -1060,11 +1067,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // První načtení (výchozí je CraftList)
+    // První automatické načtení (výchozí portál je CraftList)
     fetchAndRenderPodium('craftlist');
 });
 </script>
-
 
 
 
