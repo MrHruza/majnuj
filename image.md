@@ -25,4 +25,5 @@ discord postava
 
 vote
 
-<img width="532" height="445" alt="aaaaaa" src="https://github.com/user-attachments/assets/df2ad304-d448-484e-87ab-d11905da5684" />
+<img width="532" height="445" alt="vote" src="https://github.com/user-attachments/assets/15eccf74-fe02-48a3-acdf-f2f68567f659" />
+
