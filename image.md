@@ -21,3 +21,4 @@
 discord postava
 
 <img width="235" height="272" alt="discord_postava" src="https://github.com/user-attachments/assets/5e7b8581-6dc5-41ac-9e22-e3860e7e1ab6" />
+<img width="419" height="629" alt="steve" src="https://github.com/user-attachments/assets/1ff599a5-8799-4b07-b80f-fa904109fcf4" />
