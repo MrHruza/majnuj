@@ -1068,7 +1068,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <style>
-    /* Import fontů z webu */
     @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Montserrat:wght@500;600&display=swap');
 
     .rybar-minihry-section {
@@ -1086,7 +1085,6 @@ document.addEventListener('DOMContentLoaded', function() {
         text-align: center;
     }
 
-    /* Hlavní velký nadpis sekce */
     .minihry-main-title {
         font-size: 2.5rem;
         font-weight: 700;
@@ -1096,48 +1094,45 @@ document.addEventListener('DOMContentLoaded', function() {
         letter-spacing: -0.5px;
     }
 
-    /* Okno slideru, které skryje vše, co přetéká za hranici 3 zobrazených karet */
     .minihry-slider-container {
         width: 100%;
         overflow: hidden;
-        padding: 10px 0;
+        padding: 20px 0;
     }
 
-    /* Flex řada pro plynulý posun karet v JavaScriptu */
     .minihry-grid {
         display: flex;
-        gap: 30px; /* Mezera mezi kartami */
-        transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* Plynulá animace posunu */
+        gap: 40px; /* Zvětšena mezera mezi kartami */
     }
 
-    /* Jednotlivá karta s minihrou - dynamicky spočítaná šířka, aby se vešly přesně 3 */
     .minihra-card {
-        flex: 0 0 calc((100% - (30px * 2)) / 3); /* 30px je gap, dáváme 3 karty na řádek */
+        /* Šířka upravená pro novou mezeru 40px */
+        flex: 0 0 calc((100% - (40px * 2)) / 3); 
         display: flex;
         flex-direction: column;
         align-items: center;
         box-sizing: border-box;
     }
 
-    /* Prostor pro logo minihry - OPRAVENO PŘETÉKÁNÍ */
+    /* ZVĚTŠENO: Vyhrazené místo pro logo je teď vyšší (ze 120px na 180px) */
     .minihra-logo-holder {
-        height: 120px; /* Zvýšeno pro lepší rozestup */
+        height: 180px; 
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
-    /* Samotný obrázek loga - OPRAVENO PŘETÉKÁNÍ */
+    /* ZVĚTŠENO: Loga se nyní mohou roztáhnout a transformovat do větší velikosti */
     .minihra-logo-img {
-        max-width: 100%;
-        max-height: 100%; /* Teď se zaručeně vejde do holderu a nepřeteče do textu */
+        max-width: 115%; /* Mírné povolení přetečení do šířky pro široká loga */
+        max-height: 100%; 
         object-fit: contain;
-        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); 
+        transform: scale(1.15); /* Zvětšení loga o 15 % */
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4)); 
     }
 
-    /* Popisný text pod logem */
     .minihra-text {
         color: #ffffff; 
         font-size: 1.0rem;
@@ -1147,15 +1142,15 @@ document.addEventListener('DOMContentLoaded', function() {
         text-align: center;
     }
 
-    /* RESPONSIVITA (PRO MOBILY A TABLETY) */
     @media (max-width: 900px) {
         .minihra-card {
-            /* Na mobilech se ukáže jen 1 karta najednou pro lepší čitelnost */
             flex: 0 0 100%; 
         }
-        .minihry-main-title {
-            font-size: 2rem;
-            margin-bottom: 30px;
+        .minihra-logo-holder {
+            height: 140px;
+        }
+        .minihra-logo-img {
+            transform: scale(1.05);
         }
     }
 </style>
@@ -1163,40 +1158,36 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const grid = document.getElementById("minihryGrid");
-        const cards = document.querySelectorAll(".minihra-card");
-        let currentIndex = 0;
         
-        // Funkce, která spočítá o kolik se má slider posunout
-        function updateSlider() {
+        // Funkce pro plynulý posun výhradně DOLEVA
+        function slideLeft() {
+            const cards = document.querySelectorAll(".minihra-card");
             if (cards.length === 0) return;
-            
-            // Zjistíme, kolik karet se aktuálně zobrazuje (na mobilu 1, na PC 3)
-            const cardsToShow = window.innerWidth <= 900 ? 1 : 3;
-            const maxIndex = cards.length - cardsToShow;
-            
-            // Pokud dojedeme na konec, skočíme zpátky na začátek
-            if (currentIndex > maxIndex) {
-                currentIndex = 0;
-            }
-            
-            // Spočítáme šířku jedné karty včetně mezery (gap)
-            const cardWidth = cards[0].getBoundingClientRect().width;
-            const gap = 30; // odpovídá gap v CSS
-            
-            // Posuneme grid o patřičný počet pixelů
-            const moveX = currentIndex * (cardWidth + gap);
+
+            const firstCard = cards[0];
+            const cardWidth = firstCard.getBoundingClientRect().width;
+            const gap = 40; // Odpovídá gap v CSS
+            const moveX = cardWidth + gap;
+
+            // 1. Nastavíme animaci posunu celého gridu doleva
+            grid.style.transition = "transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)";
             grid.style.transform = `translateX(-${moveX}px)`;
+
+            // 2. Jakmile animace skončí, vezmeme první kartu, hodíme ji na konec a resetujeme pozici gridu
+            setTimeout(() => {
+                grid.style.transition = "none";
+                grid.style.transform = "translateX(0)";
+                grid.appendChild(firstCard);
+            }, 800); // Čas musí odpovídat délce transition (0.8s = 800ms)
         }
 
-        // Interval automatického posouvání (4000 ms = 4 sekundy)
-        let autoSlide = setInterval(() => {
-            currentIndex++;
-            updateSlider();
-        }, 4000);
+        // Interval automatického posouvání (4 sekundy)
+        let autoSlide = setInterval(slideLeft, 4000);
 
-        // Při změně velikosti okna (např. otočení mobilu) slider přepočítáme
+        // Ochrana při klikání nebo změnách velikosti okna
         window.addEventListener("resize", () => {
-            updateSlider();
+            grid.style.transition = "none";
+            grid.style.transform = "translateX(0)";
         });
     });
 </script>
