@@ -22,4 +22,7 @@ discord postava
 
 <img width="235" height="272" alt="discord_postava" src="https://github.com/user-attachments/assets/5e7b8581-6dc5-41ac-9e22-e3860e7e1ab6" />
 <img width="419" height="629" alt="steve" src="https://github.com/user-attachments/assets/1ff599a5-8799-4b07-b80f-fa904109fcf4" />
-<img width="291" height="437" alt="npc_vote" src="https://github.com/user-attachments/assets/df2ad304-d448-484e-87ab-d11905da5684" />
+
+vote
+
+<img width="532" height="445" alt="aaaaaa" src="https://github.com/user-attachments/assets/df2ad304-d448-484e-87ab-d11905da5684" />
