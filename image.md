@@ -14,3 +14,6 @@
 
 <img width="1536" height="1536" alt="survival_m_web" src="https://github.com/user-attachments/assets/33f137c6-7e79-4ce0-b297-dac8ca7dd17f" />
 <img width="1536" height="1536" alt="oneblock_m_web" src="https://github.com/user-attachments/assets/b9a9274b-4260-4b18-a86b-144dcbb298a7" />
+<img width="1536" height="1536" alt="skyblock_m_web" src="https://github.com/user-attachments/assets/df01d144-d5eb-40fc-bacf-5c25d1c015bb" />
+<img width="1536" height="598" alt="eggwars_m" src="https://github.com/user-attachments/assets/66c01a7e-8cd7-484f-b0dc-48e0a0c425b8" />
+<img width="1536" height="598" alt="kffa_m" src="https://github.com/user-attachments/assets/1b3a928b-7bde-409c-bf72-bc9c36c18c47" />
