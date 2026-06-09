@@ -580,9 +580,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 </div>
 
                 <div class="vote-buttons-grid">
-                    <a data-vote-url="https://craftlist.org/therapiecz?nickname=%p%" href="#" class="vote-btn btn-craftlist">CraftList.cz</a>
-                    <a data-vote-url="https://czech-craft.eu/server/therapie-cz/vote/?user=%p%" href="#" class="vote-btn btn-czechcraft">Czech-Craft.cz</a>
-                    <a data-vote-url="https://minecraftservery.eu/server/therapiecz/vote/%p%" href="#" class="vote-btn btn-mcservery">MinecraftServery.eu</a>
+                    <a data-vote-url="https://craftlist.org/majnuj-eu?nickname=%p%" href="#" class="vote-btn btn-craftlist">CraftList.cz</a>
+                    <a data-vote-url="https://czech-craft.eu/server/majnuj-eu/vote/?user=%p%" href="#" class="vote-btn btn-czechcraft">Czech-Craft.cz</a>
+                    <a data-vote-url="https://minecraftservery.eu/server/majnuj-eu/vote/%p%" href="#" class="vote-btn btn-mcservery">MinecraftServery.eu</a>
                 </div>
             </div>
 
@@ -593,7 +593,14 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="vote-benefits-grid">
             
             <div class="benefit-card">
-                <h3 class="benefit-title" style="margin-bottom: 20px; text-align: center; color: #f0b638;">🏆 TOP 3 HLASUJÍCÍ</h3>
+                <h3 class="benefit-title" style="margin-bottom: 15px; text-align: center; color: #f0b638;">🏆 TOP 3 PODLE PORTÁLŮ</h3>
+                
+                <div class="portal-switcher">
+                    <button class="switcher-btn active" data-portal="craftlist">CraftList</button>
+                    <button class="switcher-btn" data-portal="czechcraft">Czech-Craft</button>
+                    <button class="switcher-btn" data-portal="mcservery">MCServery</button>
+                </div>
+
                 <div id="vote-top3-podium" class="mini-podium-container">
                     <div class="mini-podium-loading">Načítání žebříčku...</div>
                 </div>
@@ -650,7 +657,6 @@ document.addEventListener("DOMContentLoaded", function() {
         margin: 0;
     }
 
-    /* ÚPRAVA PRO ZHUŠTĚNÍ BOXU */
     .vote-configurator-box {
         background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(255, 255, 255, 0.05);
@@ -658,7 +664,7 @@ document.addEventListener("DOMContentLoaded", function() {
         width: 100%;
         display: flex;
         gap: 40px;
-        padding: 30px; /* mírně snížen padding ze 40px */
+        padding: 30px;
         box-sizing: border-box;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         backdrop-filter: blur(10px);
@@ -670,7 +676,7 @@ document.addEventListener("DOMContentLoaded", function() {
         display: flex;
         align-items: center;
         justify-content: center;
-        max-height: 250px; /* Zastropování výšky pro zhuštění */
+        max-height: 250px;
         overflow: hidden;
     }
 
@@ -682,11 +688,10 @@ document.addEventListener("DOMContentLoaded", function() {
         justify-content: center;
     }
 
-    /* ZHUŠTĚNÍ OBRÁZKU */
     .vote-preview-img {
         max-width: 100%;
-        max-height: 230px; /* Snížení maximální výšky obrázku */
-        object-fit: cover; /* Hezké oříznutí bez deformace */
+        max-height: 230px;
+        object-fit: cover;
         border-radius: 12px;
     }
 
@@ -808,6 +813,34 @@ document.addEventListener("DOMContentLoaded", function() {
         color: #ffffff;
     }
 
+    /* STYL PRO PŘEPÍNAČ PORTÁLŮ */
+    .portal-switcher {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 20px;
+        background: rgba(0,0,0,0.2);
+        padding: 5px;
+        border-radius: 10px;
+    }
+
+    .switcher-btn {
+        background: transparent;
+        border: none;
+        color: #8c92ac;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+    }
+
+    .switcher-btn.active {
+        background: #f0b638;
+        color: #1f1f27;
+    }
+
     .benefit-desc {
         color: #8c92ac;
         font-size: 0.95rem;
@@ -830,6 +863,7 @@ document.addEventListener("DOMContentLoaded", function() {
         gap: 10px;
         align-items: flex-end;
         margin-top: 10px;
+        min-height: 140px;
     }
 
     .mini-podium-card {
@@ -893,7 +927,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // FORMULÁŘ
+    // 1. FORMULÁŘ PRO ZADÁNÍ NICKU A KLIKÁNÍ
     const inputField = document.getElementById('player-nick-input');
     const headImage = document.getElementById('player-head-image');
     const voteButtons = document.querySelectorAll('[data-vote-url]');
@@ -932,66 +966,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // NAČÍTÁNÍ API TOP 3
-    async function loadTop3Votes() {
-        const podiumContainer = document.getElementById('vote-top3-podium');
-        const API_URL = 'https://rest.therapie.cz/api/v1/3e0710cb-96f5-4330-96dc-b98ac8832b02';
-        
-        try {
-            const response = await fetch(API_URL);
-            if (!response.ok) throw new Error(`Chyba: ${response.status}`);
-            
-            const result = await response.json();
-            if (!result.success || !result.data || result.data.length === 0) {
-                podiumContainer.innerHTML = '<div class="mini-podium-loading">Žádná data</div>';
-                return;
-            }
 
-            const top3 = result.data.slice(0, 3);
-            const slots = [
-                top3[0] || { player_name: '---', votes_total: 0 },
-                top3[1] || { player_name: '---', votes_total: 0 },
-                top3[2] || { player_name: '---', votes_total: 0 }
-            ];
-
-            podiumContainer.innerHTML = `
-                <div class="mini-podium-card m-rank-1">
-                    <div class="mini-podium-medal">🥇</div>
-                    <div class="mini-podium-avatar">
-                        <img src="${slots[0].player_name !== '---' ? 'https://mc-heads.net/avatar/' + slots[0].player_name + '/40' : 'https://cdn.prod.website-files.com/68828d32a4fb4696477cfc1e/695a6fa31451ea9b96070b62_steve.jpg'}" alt="1st">
-                    </div>
-                    <div class="mini-podium-name">${slots[0].player_name}</div>
-                    <div class="mini-podium-score">${slots[0].votes_total} hl.</div>
-                </div>
-
-                <div class="mini-podium-card m-rank-2">
-                    <div class="mini-podium-medal">🥈</div>
-                    <div class="mini-podium-avatar">
-                        <img src="${slots[1].player_name !== '---' ? 'https://mc-heads.net/avatar/' + slots[1].player_name + '/40' : 'https://cdn.prod.website-files.com/68828d32a4fb4696477cfc1e/695a6fa31451ea9b96070b62_steve.jpg'}" alt="2nd">
-                    </div>
-                    <div class="mini-podium-name">${slots[1].player_name}</div>
-                    <div class="mini-podium-score">${slots[1].votes_total} hl.</div>
-                </div>
-
-                <div class="mini-podium-card m-rank-3">
-                    <div class="mini-podium-medal">🥉</div>
-                    <div class="mini-podium-avatar">
-                        <img src="${slots[2].player_name !== '---' ? 'https://mc-heads.net/avatar/' + slots[2].player_name + '/40' : 'https://cdn.prod.website-files.com/68828d32a4fb4696477cfc1e/695a6fa31451ea9b96070b62_steve.jpg'}" alt="3rd">
-                    </div>
-                    <div class="mini-podium-name">${slots[2].player_name}</div>
-                    <div class="mini-podium-score">${slots[2].votes_total} hl.</div>
-                </div>
-            `;
-        } catch (error) {
-            podiumContainer.innerHTML = `<div class="mini-podium-error">❌ Nepodařilo se načíst data.</div>`;
-        }
-    }
-    loadTop3Votes();
-});
-</script>
-
-
-
+    // 2. NAČÍTÁNÍ TOP 3 PODLE VYBRANÉHO PORTÁLU
+    
+    // !!! ZDE SI UPRAV SVÁ UNIKÁTNÍ API ID PRO KAŽDÝ PORTÁL !!!
+    const API_URLS = {
+        craftlist: 'https://api.craftlist.org/v1/server/3e0710cb-96f5-4330-96dc-b98ac8832b02/votes',
+        czechcraft: 'https://czech-craft.eu/api/server/majnuj-eu/voters/current_month/', // Příklad URL pro CzechCraft
+        mcservery: 'https://minecraftservery
 
 
 
