@@ -18,3 +18,6 @@
 <img width="1536" height="1536" alt="eggwars_m_web" src="https://github.com/user-attachments/assets/f3b450db-fb53-4fa2-9b33-c52b77e2a72b" />
 <img width="1536" height="1536" alt="kffa_m_web" src="https://github.com/user-attachments/assets/9c1f2cb1-7961-400c-b5ec-bb22a11efec3" />
 
+discord postava
+
+<img width="235" height="272" alt="discord_postava" src="https://github.com/user-attachments/assets/5e7b8581-6dc5-41ac-9e22-e3860e7e1ab6" />
