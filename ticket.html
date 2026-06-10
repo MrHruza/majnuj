@@ -5,27 +5,33 @@
             <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="GameRealms Logo" class="gr-ticket-logo">
         </div>
 
-        <h1 class="gr-ticket-title">Podpora &amp; Tickety</h1>
-        <p class="gr-ticket-subtitle">Vyber si kategorii a vytvoř si ticket. Naši administrátoři ti odpoví co nejdříve.</p>
+        <h1 class="gr-ticket-title">Centrum podpory &amp; Pomoci</h1>
+        <p class="gr-ticket-subtitle">
+            Máš problém ve hře, nefunkční VIP výhody, nebo chceš nahlásit porušování pravidel? 
+            Vyber si správnou kategorii níže. Naše administrátorské týmy se tvému požadavku budou plně věnovat.
+        </p>
 
         <div id="ticket-step-categories" class="gr-ticket-grid">
             
             <div class="gr-category-card" onclick="selectCategory('Hráčský problém / Hlášení')">
-                <div class="category-icon">⚠️</div>
-                <h3>Problém / Hlášení</h3>
-                <p>Nahlášení hráče, bugu na serveru nebo nefunkčních příkazů.</p>
+                <div class="category-icon-box">⚠️</div>
+                <h3>Problém &amp; Porušení pravidel</h3>
+                <p>Nahlášení cheaterů, toxických hráčů, griefu krajiny, chyb v pluginech nebo nefunkčních herních příkazů na našich serverech.</p>
+                <span class="card-action-text">Otevřít formulář →</span>
             </div>
 
-            <div class="category-card-spacer" style="display:none;"></div> <div class="gr-category-card" onclick="selectCategory('Problém s platbou / Obchod')">
-                <div class="category-icon">💰</div>
-                <h3>Platba / VIP Store</h3>
-                <p>Nepřišla ti odměna z obchodu, nebo máš problém s platbou?</p>
+            <div class="gr-category-card" onclick="selectCategory('Problém s platbou / Obchod')">
+                <div class="category-icon-box">💰</div>
+                <h3>Platby &amp; VIP Store</h3>
+                <p>Problémy s nákupem klíčů, herních hodností (VIP), chybné platby kartou/SMS nebo nepřipsání zakoupených herních mincí.</p>
+                <span class="card-action-text">Otevřít formulář →</span>
             </div>
 
             <div class="gr-category-card" onclick="selectCategory('Dotaz / Jiné')">
-                <div class="category-icon">❓</div>
-                <h3>Obecný dotaz</h3>
-                <p>Potřebuješ s něčím poradit nebo máš otázku ohledně serveru?</p>
+                <div class="category-icon-box">❓</div>
+                <h3>Obecný dotaz / Ostatní</h3>
+                <p>Nenašel jsi svou sekci? Potřebuješ poradit ohledně mechanik, eventů, podskupin nebo máš návrh na zlepšení chodu projektu?</p>
+                <span class="card-action-text">Otevřít formulář →</span>
             </div>
 
         </div>
@@ -33,8 +39,15 @@
         <div id="ticket-step-form" class="gr-ticket-form-wrapper" style="display: none;">
             
             <div class="gr-form-header">
-                <button type="button" class="btn-back" onclick="goBackToCategories()">← Zpět na výběr</button>
-                <div class="selected-badge">Zvolená sekce: <span id="current-category">---</span></div>
+                <button type="button" class="btn-back" onclick="goBackToCategories()">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Zpět na výběr kategorií
+                </button>
+                <div class="selected-badge">Sekce podpory: <span id="current-category">---</span></div>
+            </div>
+
+            <div class="gr-form-info-notice">
+                <strong>Oznámení:</strong> Po odeslání ticketu obdrží náš Admin Tým upozornění na Discordu. Jakmile ticket potvrdíme, spustí se garantovaná lhůta <strong>48 hodin</strong> na vyřešení tvé žádosti.
             </div>
 
             <form id="gr-actual-form" onsubmit="sendTicketToDiscord(event)">
@@ -43,31 +56,37 @@
 
                 <div class="gr-form-row-half">
                     <div class="gr-ticket-input">
-                        <label for="mc-nick">Minecraft Nick *</label>
-                        <input type="text" id="mc-nick" required placeholder="Tvůj nick ve hře">
+                        <label for="mc-nick">Minecraft Nickname <span class="required-star">*</span></label>
+                        <input type="text" id="mc-nick" required placeholder="Zadej svůj přesný herní nick">
+                        <span class="input-help">Zadej jméno, pod kterým hraješ, abychom tě našli v logách serveru.</span>
                     </div>
 
                     <div class="gr-ticket-input">
-                        <label for="dc-nick">Discord Nick <span class="optional">(Nepovinné)</span></label>
-                        <input type="text" id="dc-nick" placeholder="Napiš pokud máš (např. nick#0000)">
+                        <label for="dc-nick">Discord uživatelské jméno <span class="optional">(Nepovinné)</span></label>
+                        <input type="text" id="dc-nick" placeholder="Např. tvujnick nebo stary_format#1234">
+                        <span class="input-help">Pokud vyplníš, můžeme tě v případě potřeby kontaktovat přímo přes PM.</span>
                     </div>
                 </div>
 
                 <div class="gr-ticket-input">
-                    <label for="ticket-email">E-mailová adresa *</label>
-                    <input type="email" id="ticket-email" required placeholder="Tvůj e-mail pro odpověď">
+                    <label for="ticket-email">E-mailová adresa <span class="required-star">*</span></label>
+                    <input type="email" id="ticket-email" required placeholder="Zadej svůj kontaktní e-mail">
+                    <span class="input-help">Sem ti dorazí finální vyjádření od vedení serveru nebo potvrzení o vyřešení.</span>
                 </div>
 
                 <div class="gr-ticket-input">
-                    <label for="ticket-reason">Popis problému / Důvod ticketu *</label>
-                    <textarea id="ticket-reason" rows="6" required placeholder="Zde podrobně popiš, co potřebuješ vyřešit..."></textarea>
+                    <label for="ticket-reason">Detailní popis situace / Důvod žádosti <span class="required-star">*</span></label>
+                    <textarea id="ticket-reason" rows="6" required placeholder="Popiš nám situaci co nejdetailněji. Pokud máš důkazy (odkazy na screenshoty/videa), vlož je sem také..."></textarea>
+                    <span class="input-help">Čím podrobnější popis nám poskytneš, tím rychleji dokážeme tvůj problém zkontrolovat.</span>
                 </div>
 
-                <button type="submit" id="btn-submit-ticket" class="btn-ticket-submit">Odeslat ticket</button>
+                <button type="submit" id="btn-submit-ticket" class="btn-ticket-submit">Odeslat závazný ticket</button>
             </form>
             
             <div id="ticket-success-msg" class="ticket-status-msg success" style="display: none;">
-                ✔ Ticket byl úspěšně odeslán na náš Discord! Brzy tě budeme kontaktovat.
+                <div class="success-icon">✔</div>
+                <h3>Ticket úspěšně doručen!</h3>
+                <p>Tvá žádost byla zapsána do systému a odeslána na náš Discord. Od chvíle, kdy administrátor potvrdí zpracování (označí fajfkou), začíná odpočet 48 hodin na vyřešení.</p>
             </div>
         </div>
 
@@ -75,321 +94,43 @@
 </section>
 
 <script>
-    // SEM VLOŽ SVŮJ DISCORD WEBHOOK URL Z NASTAVENÍ KANÁLU
+    // ZDE NAHRADÍŠ ZA SVŮJ DISCORD WEBHOOK URL
     const DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1514337149225271539/IaAblYraHaonnrseGXx5O5edj-9sZh1435stEFCTc-EYI3CVmL-irOFhw7heBMEJJLCr";
 
     function selectCategory(categoryName) {
-        // Nastaví název kategorie do formuláře a skrytého inputu
         document.getElementById('current-category').innerText = categoryName;
         document.getElementById('form-category').value = categoryName;
         
-        // Schová kategorie, ukáže formulář
         document.getElementById('ticket-step-categories').style.display = 'none';
         document.getElementById('ticket-step-form').style.display = 'block';
         
-        // Resetuje předchozí stav úspěchu/odeslání
         document.getElementById('gr-actual-form').style.display = 'block';
         document.getElementById('ticket-success-msg').style.display = 'none';
     }
 
     function goBackToCategories() {
-        // Schová formulář, ukáže kategorie
         document.getElementById('ticket-step-form').style.display = 'none';
         document.getElementById('ticket-step-categories').style.display = 'grid';
     }
 
     function sendTicketToDiscord(event) {
-        event.preventDefault(); // Zamezí obnovení stránky
+        event.preventDefault();
 
         const btnSubmit = document.getElementById('btn-submit-ticket');
-        btnSubmit.innerText = "Odesílám...";
+        btnSubmit.innerText = "Zpracovávám a odesílám...";
         btnSubmit.disabled = true;
 
-        // Načtení dat z políček
         const kategoria = document.getElementById('form-category').value;
         const mcNick = document.getElementById('mc-nick').value;
         const dcNick = document.getElementById('dc-nick').value || "Nezadáno";
         const email = document.getElementById('ticket-email').value;
         const duvod = document.getElementById('ticket-reason').value;
 
-        // Vytvoření pěkného JSON formátu (Embed zprávy) pro Discord
         const discordPayload = {
             embeds: [{
-                title: "📩 Nový Webový Ticket",
-                color: 9403380, // Fialová barva v HEX převedená na Integer (#8f7bf4)
+                title: "📩 NOVÝ WEB TICKET ZAREGISTROVÁN",
+                color: 6118388, // #5d5bf4 převedeno na int
+                description: "Pro spuštění odpočtu 48 hodin a potvrzení ticketu přidejte pod tuto zprávu reakci fajfky ✅.",
                 fields: [
-                    { name: "🗂 Sekce ticketu", value: kategoria, inline: false },
-                    { name: "🎮 Minecraft Nick", value: mcNick, inline: true },
-                    { name: "💬 Discord Nick", value: dcNick, inline: true },
-                    { name: "📧 E-mail", value: email, inline: false },
-                    { name: "📝 Důvod / Popis", value: duvod, inline: false }
-                ],
-                timestamp: new Date().toISOString()
-            }]
-        };
-
-        // Odeslání na Discord pomocí Fetch API
-        fetch(DISCORD_WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(discordPayload)
-        })
-        .then(response => {
-            if (response.ok) {
-                // Skryje formulář a ukáže hlášku o úspěchu
-                document.getElementById('gr-actual-form').style.display = 'none';
-                document.getElementById('ticket-success-msg').style.display = 'block';
-                document.getElementById('gr-actual-form').reset();
-            } else {
-                alert("Došlo k chybě při odesílání ticketu. Zkontroluj nastavení Webhooku.");
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("Chyba sítě. Nepodařilo se spojit s Discordem.");
-        })
-        .finally(() => {
-            btnSubmit.innerText = "Odeslat ticket";
-            btnSubmit.disabled = false;
-        });
-    }
-</script>
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
-
-    .gr-ticket-section {
-        background-color: #111116;
-        min-height: 90vh;
-        padding: 60px 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Montserrat', sans-serif;
-    }
-
-    .gr-ticket-container {
-        width: 100%;
-        max-width: 900px;
-        text-align: center;
-    }
-
-    .gr-ticket-logo-wrapper {
-        margin-bottom: 20px;
-    }
-
-    .gr-ticket-logo {
-        height: 80px;
-        width: auto;
-    }
-
-    .gr-ticket-title {
-        color: #ffffff;
-        font-size: 1.8rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        margin: 0 0 10px 0;
-        letter-spacing: 0.5px;
-    }
-
-    .gr-ticket-subtitle {
-        color: #a0aec0;
-        font-size: 0.95rem;
-        max-width: 600px;
-        margin: 0 auto 40px auto;
-        line-height: 1.6;
-    }
-
-    /* KATEGORIE - GRID */
-    .gr-ticket-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-    }
-
-    .gr-category-card {
-        background-color: #1a1a26;
-        border: 2px solid rgba(255, 255, 255, 0.02);
-        border-radius: 14px;
-        padding: 30px 20px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-        text-align: center;
-    }
-
-    .gr-category-card:hover {
-        transform: translateY(-5px);
-        border-color: #5b5bf4;
-        box-shadow: 0 10px 25px rgba(91, 91, 244, 0.2);
-    }
-
-    .category-icon {
-        font-size: 2.5rem;
-        margin-bottom: 15px;
-    }
-
-    .gr-category-card h3 {
-        color: #ffffff;
-        font-size: 1.1rem;
-        font-weight: 700;
-        margin: 0 0 10px 0;
-    }
-
-    .gr-category-card p {
-        color: #a0aec0;
-        font-size: 0.85rem;
-        line-height: 1.5;
-        margin: 0;
-    }
-
-    /* FORMULÁŘOVÁ SEKCE */
-    .gr-ticket-form-wrapper {
-        background-color: #1a1a26;
-        border-radius: 16px;
-        padding: 40px;
-        text-align: left;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-
-    .gr-form-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        padding-bottom: 20px;
-        margin-bottom: 25px;
-    }
-
-    .btn-back {
-        background: none;
-        border: none;
-        color: #a0aec0;
-        font-weight: 600;
-        font-size: 0.85rem;
-        cursor: pointer;
-        transition: color 0.2s;
-        padding: 0;
-    }
-
-    .btn-back:hover {
-        color: #ffffff;
-        text-decoration: underline;
-    }
-
-    .selected-badge {
-        color: #ffffff;
-        font-size: 0.85rem;
-        font-weight: 700;
-    }
-
-    .selected-badge span {
-        color: #5b5bf4;
-        background-color: rgba(91, 91, 244, 0.1);
-        padding: 4px 10px;
-        border-radius: 6px;
-        margin-left: 5px;
-    }
-
-    /* INPUTY */
-    .gr-form-row-half {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-
-    .gr-ticket-input {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
-    }
-
-    .gr-ticket-input label {
-        color: #ffffff;
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-
-    .gr-ticket-input label .optional {
-        color: #718096;
-        font-size: 0.75rem;
-        font-weight: 500;
-    }
-
-    .gr-ticket-input input, 
-    .gr-ticket-input textarea {
-        background-color: #ffffff;
-        color: #111116;
-        border: 2px solid transparent;
-        padding: 14px;
-        border-radius: 8px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.9rem;
-        font-weight: 600;
-        outline: none;
-        box-sizing: border-box;
-        transition: all 0.2s;
-    }
-
-    .gr-ticket-input textarea {
-        resize: vertical;
-    }
-
-    .gr-ticket-input input:focus, 
-    .gr-ticket-input textarea:focus {
-        border-color: #5b5bf4;
-        box-shadow: 0 0 10px rgba(91, 91, 244, 0.3);
-    }
-
-    /* BUTTONS */
-    .btn-ticket-submit {
-        background-color: #ffffff;
-        color: #5b5bf4;
-        border: none;
-        border-radius: 8px;
-        padding: 16px;
-        width: 100%;
-        font-size: 0.95rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        margin-top: 10px;
-    }
-
-    .btn-ticket-submit:hover {
-        background-color: #e2e8f0;
-        transform: translateY(-2px);
-    }
-
-    /* STATUS MESSAGE */
-    .ticket-status-msg {
-        padding: 15px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    .ticket-status-msg.success {
-        background-color: rgba(72, 187, 120, 0.15);
-        color: #48bb78;
-        border: 1px solid rgba(72, 187, 120, 0.3);
-    }
-
-    /* RESPONSIVITA */
-    @media (max-width: 768px) {
-        .gr-ticket-grid {
-            grid-template-columns: 1fr;
-        }
-        .gr-form-row-half {
-            grid-template-columns: 1fr;
-            gap: 0;
-        }
-        .gr-ticket-form-wrapper {
-            padding: 25px 20px;
-        }
-    }
-</style>
+                    { name: "📂 Sekce podpory", value: "
+http://googleusercontent.com/immersive_entry_chip/0
