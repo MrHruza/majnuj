@@ -1,0 +1,314 @@
+<section class="login-section">
+    <div class="login-container">
+        
+        <div class="login-logo-wrapper">
+            <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="GameRealms Logo" class="login-logo">
+        </div>
+
+        <h1 class="login-title">Přihlášení na web</h1>
+        <p class="login-subtitle">Přihlaš se pomocí stejných údajů jako ve hře.</p>
+        
+        <div class="login-info-box">
+            <span class="info-icon">ℹ</span>
+            <p>Ještě nemáš účet? Připoj se na server <strong>majnuj.eu</strong> a napiš do chatu: <br><code class="cmd-highlight">/register [heslo] [heslo]</code></p>
+        </div>
+
+        <form class="login-form" action="/login" method="POST">
+            
+            <div class="input-group">
+                <input type="text" id="minecraft-nick" name="username" required placeholder=" ">
+                <label for="minecraft-nick">Minecraft nick</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="minecraft-password" name="password" required placeholder=" ">
+                <label for="minecraft-password">Heslo</label>
+                <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+            </div>
+
+            <div class="login-options">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember">
+                    <span class="checkmark"></span>
+                    Zůstat přihlášen
+                </label>
+                <a href="#zapomenute-heslo" class="forgot-password">Zapomněl jsi heslo?</a>
+            </div>
+
+            <button type="submit" class="btn-login-submit">Přihlásit se</button>
+            
+        </form>
+    </div>
+</section>
+
+<script>
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('minecraft-password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+    }
+</script>
+
+<style>
+    .login-section {
+        min-height: 80vh;
+        padding: 40px 20px;
+        background-color: #14141c; /* Tmavé pozadí odpovídající screenshotům */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .login-container {
+        background-color: #1a1a24; /* Barva boxu z předlohy */
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        border-radius: 16px;
+        padding: 40px;
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+
+    .login-logo-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .login-logo {
+        height: 75px;
+        width: auto;
+    }
+
+    .login-title {
+        color: #ffffff;
+        font-size: 1.4rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin: 0 0 8px 0;
+        letter-spacing: 0.5px;
+    }
+
+    .login-subtitle {
+        color: #a0aec0;
+        font-size: 0.85rem;
+        margin: 0 0 20px 0;
+        font-weight: 500;
+    }
+
+    /* Nápověda ohledně registrace na serveru */
+    .login-info-box {
+        background-color: rgba(88, 101, 242, 0.1);
+        border-left: 3px solid #5865F2;
+        border-radius: 6px;
+        padding: 12px 15px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: flex-start;
+        text-align: left;
+        gap: 10px;
+    }
+
+    .login-info-box p {
+        margin: 0;
+        color: #cbd5e0;
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .info-icon {
+        color: #5865F2;
+        font-weight: bold;
+        font-size: 0.95rem;
+    }
+
+    .cmd-highlight {
+        background-color: rgba(0, 0, 0, 0.3);
+        color: #ffcc00;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 0.85rem;
+        display: inline-block;
+        margin-top: 4px;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* Animované plovoucí popisky (Floating Labels) */
+    .input-group {
+        position: relative;
+        width: 100%;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 14px 16px;
+        background-color: #ffffff;
+        color: #1a1a24;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        box-sizing: border-box;
+        outline: none;
+        transition: border-color 0.2s ease;
+    }
+
+    /* Úprava pravého paddingu u hesla kvůli tlačítku oka */
+    .input-group input[type="password"],
+    .input-group input[type="text"] {
+        padding-right: 45px;
+    }
+
+    .input-group label {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #718096;
+        font-size: 0.9rem;
+        font-weight: 600;
+        pointer-events: none;
+        transition: all 0.2s ease;
+    }
+
+    /* Efekt zvednutí popisku při kliknutí nebo když je pole plné */
+    .input-group input:focus ~ label,
+    .input-group input:not(:placeholder-shown) ~ label {
+        top: -8px;
+        left: 10px;
+        font-size: 0.75rem;
+        background-color: #5865F2; /* Fialovo-modrá barva štítku */
+        color: #ffffff;
+        padding: 2px 8px;
+        border-radius: 4px;
+    }
+
+    .input-group input:focus {
+        border-color: #5865F2;
+    }
+
+    /* Tlačítko pro skrytí/zobrazení hesla */
+    .toggle-password {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #718096;
+        cursor: pointer;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .toggle-password:hover {
+        color: #1a1a24;
+    }
+
+    /* Možnosti pod poli (Zapomenuté heslo, checkbox) */
+    .login-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-top: -5px;
+    }
+
+    .remember-me {
+        display: flex;
+        align-items: center;
+        color: #a0aec0;
+        cursor: pointer;
+        position: relative;
+        padding-left: 22px;
+        user-select: none;
+    }
+
+    .remember-me input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    .checkmark {
+        position: absolute;
+        left: 0;
+        height: 14px;
+        width: 14px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+    }
+
+    .remember-me input:checked ~ .checkmark {
+        background-color: #5865F2;
+        border-color: #5865F2;
+    }
+
+    .checkmark::after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 4px;
+        top: 1px;
+        width: 4px;
+        height: 7px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+    .remember-me input:checked ~ .checkmark::after {
+        display: block;
+    }
+
+    .forgot-password {
+        color: #5865F2;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .forgot-password:hover {
+        color: #7b85f5;
+        text-decoration: underline;
+    }
+
+    /* Odesílací tlačítko */
+    .btn-login-submit {
+        background-color: #ffffff;
+        color: #5865F2;
+        border: none;
+        border-radius: 8px;
+        padding: 14px;
+        font-size: 0.9rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+        margin-top: 5px;
+    }
+
+    .btn-login-submit:hover {
+        background-color: #e2e8f0;
+        transform: translateY(-2px);
+    }
+
+    .btn-login-submit:active {
+        transform: translateY(0);
+    }
+</style>
