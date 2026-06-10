@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Majnuj.eu • Nábor</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Montserrat:wght@400;500;600;700;800&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+        /* ROZTAŽENÍ WEBU A NULOVÁNÍ BÍLÝCH OKRAJŮ */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            overflow-x: hidden;
+            background-color: #1f1f27;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* PEVNÁ HORNÍ LIŠTA (NAVBAR) */
+        .rybar-navbar-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100% !important;
+            height: 80px;
+            background-color: #1f1f27;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            box-sizing: border-box;
+            padding: 0 30px;
+        }
+
+        .rybar-navbar-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rybar-navbar-logo img {
+            height: 42px;
+            width: auto;
+        }
+
+        .rybar-navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-item {
+            color: #b5b9c4;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .nav-btn-shop {
+            background-color: #ffcc00;
+            color: #000000;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 12px 28px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .nav-btn-shop:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
+        }
+
+        /* HERO SEKCE S POZADÍM */
+        .rybar-hero-section {
+            background: url('https://www.minecraft.net/content/dam/minecraftnet/archive/6581250e483233ceb023d260eef9ed6a-header.jpg') no-repeat center center;
+            background-size: cover;
+            min-height: 85vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding-top: 80px; 
+            padding-bottom: 120px;
+        }
+
+        .rybar-hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 25px;
+            z-index: 2;
+        }
+
+        .rybar-hero-logo {
+            max-width: 100%;
+            width: 840px;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .rybar-hero-play-btn {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #f0b638;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 18px 45px;
+            border-radius: 16px;
+            box-shadow: 0 6px 0 #f0b638, 0 12px 25px rgba(0,0,0,0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .rybar-hero-play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #f0b638, 0 15px 30px rgba(0,0,0,0.3);
+            filter: brightness(1.05);
+        }
+
+        .rybar-hero-play-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #f0b638, 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .rybar-hero-ip-box {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            padding: 10px 24px;
+            border-radius: 30px;
+            color: #1e3153;
+            font-size: 0.95rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+
+        .rybar-hero-ip-box:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(1.03);
+        }
+
+        .rybar-hero-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            line-height: 0;
+        }
+
+        .rybar-hero-wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 70px;
+        }
+
+        .rybar-hero-wave .wave-fill {
+            fill: #1f1f27; 
+        }
+
+        /* --- SEKCE NÁBORŮ (PŘESNĚ PODLE PŘEDLOHY) --- */
+        .nabor-section {
+            padding: 60px 20px 10px 20px;
+            background-color: #1f1f27;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nabor-grid {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .nabor-card {
+            background-color: #16161f;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .nabor-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 2px solid #5a005a; /* Fialový okraj hlavičky badge */
+            margin-bottom: 25px;
+        }
+
+        .nabor-badge-img {
+            height: 35px;
+            width: auto;
+        }
+
+        .nabor-header-title {
+            text-align: right;
+        }
+
+        .nabor-header-title .sub {
+            font-size: 0.65rem;
+            color: #a0aec0;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .nabor-header-title .main {
+            font-size: 0.95rem;
+            color: #ffffff;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .nabor-intro {
+            color: #cbd5e0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .nabor-intro a {
+            color: #b57cff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nabor-conditions-title {
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+        }
+
+        .nabor-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+        }
+
+        .nabor-list li {
+            position: relative;
+            padding-left: 20px;
+            color: #a0aec0;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .nabor-list li::before {
+            content: "•";
+            position: absolute;
+            left: 5px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .btn-discord-nabor {
+            background-color: #ffffff;
+            color: #5865F2; /* Barva Discordu pro text */
+            text-decoration: none;
+            text-align: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            padding: 14px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        .btn-discord-nabor:hover {
+            background-color: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        /* --- STYLOVÁNÍ PATIČKY (FOOTER) --- */
+        .main-footer {
+            background-color: #191920; 
+            color: #ffffff;
+            padding: 40px 0 20px 0;
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .footer-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .brand-text h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text p {
+            margin: 2px 0 0 0;
+            font-size: 0.75rem;
+            color: #a0aec0;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-socials a {
+            color: #ffffff;
+            font-size: 1.3rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
+        }
+
+        .footer-socials a:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            margin: 0 0 20px 0;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-about p {
+            line-height: 1.6;
+            color: #cbd5e0;
+            margin: 0 0 15px 0;
+        }
+
+        .footer-about .disclaimer {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .footer-links ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #cbd5e0;
+        }
+
+        .footer-links ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: #ffffff;
+        }
+
+        .footer-legal p {
+            margin: 0 0 10px 0;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+
+        .footer-legal a {
+            color: #3182ce;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-legal a:hover {
+            color: #63b3ed;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* --- RESPONZIVITA PRO MOBILY A TABLETY --- */
+        @media (max-width: 992px) {
+            .nabor-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rybar-navbar-menu { gap: 12px; }
+            .nav-item { font-size: 0.85rem; }
+            .nav-btn-shop { padding: 8px 16px; font-size: 0.85rem; }
+            .rybar-hero-logo { width: 290px; }
+            .rybar-hero-play-btn { font-size: 1.2rem; padding: 14px 35px; }
+            
+            .nabor-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-top-bar {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .footer-brand {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="rybar-navbar-header">
+        <div class="rybar-navbar-container">
+            <div class="rybar-navbar-logo">
+                <a href="#" onclick="scrollToSection(event, 'hero-section')">
+                    <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="Majnuj Logo" style="height: 50px; width: auto; border-radius: 8px;">
+                </a>
+            </div>
+
+            <nav class="rybar-navbar-menu">
+               <a href="index.html" class="nav-item">Domů</a>
+               <a href="wiki" class="nav-item">Wiki</a>
+               <a href="https://discord.com/invite/n7PsVuE2Pu" target="_blank" class="nav-item">Discord</a>
+               <a href="pravidla" class="nav-item">Pravidla</a>
+               <a href="tym" class="nav-item active">Tým</a>
+            </nav>
+
+            <div class="rybar-navbar-action">
+                <a href="#" onclick="scrollToSection(event, 'obchod-section')" class="nav-btn-shop">Obchod</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="hero-section" class="rybar-hero-section">
+        <div class="rybar-hero-content">
+            <div class="rybar-hero-logo-container">
+                <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="Majnuj Logo" class="rybar-hero-logo">
+            </div>
+
+            <a href="jak-se-pripojit" class="rybar-hero-play-btn">CHCI JÍT HRÁT!</a>
+
+            <div class="rybar-hero-ip-box" id="ip-copy-button" onclick="copyIpAddress()">
+                <i class="fa-solid fa-copy"></i>
+                <span id="ip-text">MAJNUJ.EU</span>
+            </div>
+        </div>
+
+        <div class="rybar-hero-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V60.26C1122.4,56.24,1053.31,110.59,985.66,92.83Z" class="wave-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section class="nabor-section">
+        <div class="nabor-grid">
+            
+            <div class="nabor-card">
+                <div>
+                    <div class="nabor-header">
+                        <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="Badge" class="nabor-badge-img">
+                        <div class="nabor-header-title">
+                            <p class="sub">Nábor</p>
+                            <p class="main">Moderátor</p>
+                        </div>
+                    </div>
+                    <p class="nabor-intro">Rád pomáháš hráčům? <a href="#">Jsi komunikativní</a>, znáš server a máš pevné nervy? Zkus to jako moderátor, který se může vypracovat až na helpera či admina, dle šikovnosti.</p>
+                    <p class="nabor-conditions-title">Podmínky:</p>
+                    <ul class="nabor-list">
+                        <li>Věk minimálně 15+</li>
+                        <li>Nahraný čas na serveru alespoň 60 hodin</li>
+                        <li>Dokončené základní vzdělání</li>
+                        <li>Být aktivní na minecraft i discord serverech a mít také funkční mikrofon</li>
+                        <li>Pokročilá znalost serveru, příkazů a pravidel</li>
+                        <li>Ovládat základy českého/slovenského jazyka. Znalost angličtiny je bonus</li>
+                    </ul>
+                </div>
+                <a href="https://discord.com/invite/n7PsVuE2Pu" target="_blank" class="btn-discord-nabor">Přejít na Discord</a>
+            </div>
+
+            <div class="nabor-card">
+                <div>
+                    <div class="nabor-header">
+                        <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="Badge" class="nabor-badge-img">
+                        <div class="nabor-header-title">
+                            <p class="sub">Nábor</p>
+                            <p class="main">Builder</p>
+                        </div>
+                    </div>
+                    <p class="nabor-intro">Stavíš rád a chceš vidět své stavby na serverech? Myslíš si, že tvé stavby jsou dost dobré? Zkus to jako builder. Naši buildeři dostávají za dobře odvedenou práci také odměny!</p>
+                    <p class="nabor-conditions-title">Podmínky:</p>
+                    <ul class="nabor-list">
+                        <li>Věk minimálně 15+</li>
+                        <li>Nahraný čas na serveru alespoň 30 hodin</li>
+                        <li>Dokončené základní vzdělání</li>
+                        <li>Být aktivní na minecraft i discord serverech a mít také funkční mikrofon</li>
+                        <li>Mít vlastní prezentující stavbu, nebo více staveb na nějakém z našich serverů</li>
+                        <li>Mít smysl pro design, především v medieval stylu</li>
+                        <li>Ovládat základy World Editu případně jeho addonů (GoBrush atd.)</li>
+                        <li>Ovládat základy českého/slovenského jazyka. Znalost angličtiny je bonus</li>
+                    </ul>
+                </div>
+                <a href="https://discord.com/invite/n7PsVuE2Pu" target="_blank" class="btn-discord-nabor">Přejít na Discord</a>
+            </div>
+
+            <div class="nabor-card">
+                <div>
+                    <div class="nabor-header">
+                        <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="Badge" class="nabor-badge-img">
+                        <div class="nabor-header-title">
+                            <p class="sub">Nábor</p>
+                            <p class="main">Jiná pozice</p>
+                        </div>
+                    </div>
+                    <p class="nabor-intro">Chceš zde zkusit i jinou funkci? Například jako Blackbench Modeler, Developer, Grafik nebo zvládneš něco jiného? Celý seznam můžeš najít na našem discord serveru, v sekci ticketů.</p>
+                    <p class="nabor-conditions-title">Podmínky:</p>
+                    <ul class="nabor-list">
+                        <li>Věk: 15+</li>
+                        <li>Základní pojem a znalost serveru</li>
+                        <li>Být aktivní na discord serveru a mít také funkční mikrofon</li>
+                        <li>Mít zkušenosti s danou funkcí a případně mít své vlastní portfolio či ukázku svých výtvorů</li>
+                    </ul>
+                </div>
+                <a href="https://discord.com/invite/n7PsVuE2Pu" target="_blank" class="btn-discord-nabor">Přejít na Discord</a>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            
+            <div class="footer-top-bar">
+                <div class="footer-brand">
+                    <img src="https://media.forgecdn.net/avatars/thumbnails/919/310/256/256/638381453620777361.png" alt="Majnuj.eu Logo" class="footer-logo">
+                    <div class="brand-text">
+                        <h3>MAJNUJ.EU</h3>
+                        <p>JSME SERVER, KTERÝ MÁ ROZHODNĚ CO NABÍDNOUT.</p>
+                    </div>
+                </div>
+                
+                <div class="footer-socials">
+                    <a href="https://discord.com/invite/n7PsVuE2Pu" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="https://www.instagram.com/majnuj.eu/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@majnuj.eu" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.youtube.com/@MajnujEU" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-grid">
+                
+                <div class="footer-col footer-about">
+                    <h4>O MAJNUJ.EU</h4>
+                    <p>
+                        Majnuj.eu je server s bohatou historií a moderními technologiemi. Snažíme se o to, abychom vám nabídli skvělý zážitek ze hry a spoustu nezapomenutelných zážitků. U nás si můžeš zahrát Survival, Skyblock, Oneblock nebo naskočit do akčních PvP miniher. 🎮🚀
+                    </p>
+                    <p class="disclaimer">Nejedná se o oficiální produkt Minecraftu. Nejsme spojeni s Mojang Studios.</p>
+                </div>
+
+                <div class="footer-col footer-links">
+                    <h4>NAVIGACE</h4>
+                    <ul>
+                        <li><a href="jak-se-pripojit">Chci jít hrát</a></li>
+                        <li><a href="pravidla">Pravidla</a></li>
+                        <li><a href="tym">Tým</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col footer-legal">
+                    <h4>KONTAKTY</h4>
+                    <p>E-mail: <a href="mailto:info@majnuj.eu">info@majnuj.eu</a></p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2026 Majnuj.eu</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+    function scrollToSection(event, sectionId) {
+        event.preventDefault();
+        const section = document.getElementById(sectionId);
+        
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            window.location.href = 'index.html#' + sectionId;
+        }
+    }
+
+    function copyIpAddress() {
+        const ipText = "majnuj.eu";
+        navigator.clipboard.writeText(ipText).then(() => {
+            const textElement = document.getElementById("ip-text");
+            const originalText = textElement.textContent;
+            
+            textElement.textContent = "IP ZKOPÍROVÁNA!";
+            setTimeout(() => {
+                textElement.textContent = originalText;
+            }, 2000);
+        }).catch(err => {
+            console.error("Chyba při kopírování: ", err);
+        });
+    }
+    </script>
+</body>
+</html>
