@@ -1,53 +1,801 @@
-<section class="gr-ticket-section">
-    <div class="gr-ticket-container">
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Ikona webu -->
+    <link class="favicon" rel="icon" type="image/png" href="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8">
+    <title>Majnuj.eu — Centrum Podpory & Tickety</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+        /* --- GLOBÁLNÍ VZHLED & RESET --- */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            min-height: 100vh;
+            background-color: #08080c; 
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* --- PEVNÁ HORNÍ LIŠTA (NAVBAR) --- */
+        .rybar-navbar-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100% !important;
+            height: 80px;
+            background-color: #12121a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+            z-index: 9999;
+            box-sizing: border-box;
+            padding: 0 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .rybar-navbar-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rybar-navbar-logo img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+        }
+
+        .rybar-navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-item {
+            color: #b5b9c4;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            color: #f0b638; 
+            font-weight: 700;
+        }
+
+        .nav-btn-shop {
+            background-color: #ffcc00;
+            color: #000000;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 12px 28px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            box-shadow: 0 3px 0 #d49f2c;
+        }
+
+        .nav-btn-shop:hover {
+            background-color: #e6b800;
+            transform: scale(1.03);
+        }
+
+        /* --- OBSAH STRÁNKY S TICKETEM --- */
+        .gr-ticket-wrapper {
+            padding-top: 140px; 
+            padding-bottom: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Hero sekce podpory */
+        .gr-ticket-hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .gr-ticket-hero-logo {
+            height: 100px;
+            width: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(91, 91, 244, 0.3));
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .gr-ticket-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 12px 0;
+            background: linear-gradient(135deg, #ffffff 0%, #a0aec0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gr-ticket-subtitle {
+            color: #8c92ac;
+            font-size: 1rem;
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        /* --- KROK 1: KATEGORIE TICKETŮ --- */
+        .gr-ticket-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .gr-category-card {
+            background-color: #12121a;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 40px 30px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gr-category-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, #5b5bf4, #9f5bf4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gr-category-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(91, 91, 244, 0.3);
+            box-shadow: 0 15px 35px rgba(91, 91, 244, 0.2);
+        }
+
+        .gr-category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-icon-box {
+            font-size: 2.2rem;
+            background-color: rgba(255, 255, 255, 0.02);
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.01);
+        }
+
+        .gr-category-card h3 {
+            color: #ffffff;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+        }
+
+        .gr-category-card p {
+            color: #8c92ac;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0 0 30px 0;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+
+        .card-action-text {
+            color: #5b5bf4;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+
+        .gr-category-card:hover .card-action-text {
+            color: #ffffff;
+        }
+
+        /* --- KROK 2: FORMULÁŘ TICKETU --- */
+        .gr-ticket-form-wrapper {
+            background-color: #12121a;
+            border-radius: 20px;
+            padding: 45px;
+            text-align: left;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .gr-form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+        }
+
+        .btn-back {
+            background: none;
+            border: none;
+            color: #8c92ac;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+            padding: 0;
+        }
+
+        .btn-back:hover {
+            color: #ffffff;
+        }
+
+        .selected-badge {
+            color: #718096;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .selected-badge span {
+            color: #ffffff;
+            background: linear-gradient(135deg, #5b5bf4 0%, #3b3be6 100%);
+            padding: 6px 14px;
+            border-radius: 8px;
+            margin-left: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(91, 91, 244, 0.3);
+        }
+
+        /* Upozornění v záhlaví formuláře */
+        .gr-form-info-notice {
+            background-color: rgba(91, 91, 244, 0.04);
+            border: 1px solid rgba(91, 91, 244, 0.15);
+            border-left: 4px solid #5b5bf4;
+            border-radius: 8px;
+            padding: 16px 20px;
+            color: #cbd5e0;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .gr-form-info-notice strong {
+            color: #ffffff;
+        }
+
+        /* Řádky formuláře */
+        .gr-form-row-half {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .gr-ticket-input {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 25px;
+        }
+
+        .gr-ticket-input label {
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .gr-ticket-input label .required-star {
+            color: #ff3838;
+        }
+
+        .gr-ticket-input label .optional {
+            color: #4a5568;
+            font-size: 0.78rem;
+            font-weight: 500;
+            margin-left: 5px;
+        }
+
+        .gr-ticket-input input, 
+        .gr-ticket-input textarea {
+            background-color: #ffffff;
+            color: #111116;
+            border: 2px solid transparent;
+            padding: 15px 18px;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .gr-ticket-input textarea {
+            resize: vertical;
+        }
+
+        .gr-ticket-input input:focus, 
+        .gr-ticket-input textarea:focus {
+            border-color: #5b5bf4;
+            box-shadow: 0 0 15px rgba(91, 91, 244, 0.3);
+        }
+
+        .input-help {
+            color: #4a5568;
+            font-size: 0.78rem;
+            margin-top: 8px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* Odesílací tlačítko */
+        .btn-ticket-submit {
+            background-color: #ffffff;
+            color: #5b5bf4;
+            border: none;
+            border-radius: 10px;
+            padding: 18px;
+            width: 100%;
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-ticket-submit:hover {
+            background-color: #e2e8f0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(91, 91, 244, 0.2);
+        }
+
+        /* --- STAV TICKETU (Simulace po odeslání) --- */
+        .ticket-status-msg.success {
+            background-color: #12121a;
+            border: 2px solid #38a169;
+            padding: 40px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 3.5rem;
+            color: #38a169;
+            margin-bottom: 15px;
+            animation: bounceIn 0.8s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .ticket-status-msg.success h3 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin: 0 0 10px 0;
+            font-weight: 800;
+        }
+
+        .ticket-status-msg.success .status-sub {
+            color: #8c92ac;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0 0 30px 0;
+        }
+
+        /* Průběhová osa sledování (Live timeline) */
+        .ticket-live-timeline {
+            margin: 40px auto;
+            max-width: 600px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .ticket-live-timeline::before {
+            content: '';
+            position: absolute;
+            top: 18px; left: 10%; right: 10%; height: 3px;
+            background-color: rgba(255, 255, 255, 0.05);
+            z-index: 1;
+        }
+
+        /* Aktivní propojovací čára */
+        .timeline-progress-line {
+            position: absolute;
+            top: 18px; left: 10%; width: 40%; height: 3px;
+            background: linear-gradient(90deg, #38a169, #5b5bf4);
+            z-index: 2;
+            transition: width 1s ease;
+        }
+
+        .timeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 3;
+            width: 30%;
+        }
+
+        .step-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #12121a;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: #718096;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-step.completed .step-circle {
+            background-color: #38a169;
+            border-color: #38a169;
+            color: #ffffff;
+        }
+
+        .timeline-step.active .step-circle {
+            background-color: #12121a;
+            border-color: #5b5bf4;
+            color: #5b5bf4;
+            box-shadow: 0 0 15px rgba(91, 91, 244, 0.4);
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(91, 91, 244, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(91, 91, 244, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(91, 91, 244, 0); }
+        }
+
+        .step-label {
+            margin-top: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #718096;
+            text-align: center;
+        }
+
+        .timeline-step.completed .step-label { color: #38a169; }
+        .timeline-step.active .step-label { color: #5b5bf4; }
+
+        /* Časovač */
+        .countdown-display-box {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .countdown-title {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #8c92ac;
+            margin-bottom: 12px;
+        }
+
+        .countdown-timer-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #f0b638; /* Zlatá barva odpočtu */
+            letter-spacing: 0.5px;
+            font-family: monospace;
+        }
+
+        /* --- SOUČÁST PATIČKY --- */
+        .main-footer {
+            background-color: #191920; 
+            color: #ffffff;
+            padding: 40px 0 20px 0;
+            font-size: 0.9rem;
+            margin-top: 80px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .footer-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .brand-text h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text p {
+            margin: 2px 0 0 0;
+            font-size: 0.75rem;
+            color: #a0aec0;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-socials a {
+            color: #ffffff;
+            font-size: 1.3rem;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
+        }
+
+        .footer-socials a:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 50px;
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            margin: 0 0 20px 0;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-about p {
+            line-height: 1.6;
+            color: #cbd5e0;
+            margin: 0 0 15px 0;
+        }
+
+        .footer-about .disclaimer {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .footer-links ul li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #cbd5e0;
+        }
+
+        .footer-links ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: #ffffff;
+        }
+
+        .footer-legal p {
+            margin: 0 0 10px 0;
+            line-height: 1.5;
+            color: #cbd5e0;
+        }
+
+        .footer-legal a {
+            color: #3182ce;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-legal a:hover {
+            color: #63b3ed;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* --- RESPONSIVITA --- */
+        @media (max-width: 992px) {
+            .gr-ticket-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rybar-navbar-menu { gap: 12px; }
+            .nav-item { font-size: 0.85rem; }
+            .nav-btn-shop { padding: 8px 16px; font-size: 0.85rem; }
+            .gr-ticket-title { font-size: 2rem; }
+            .gr-form-row-half { grid-template-columns: 1fr; gap: 0; }
+            .gr-ticket-form-wrapper { padding: 30px 20px; }
+            .footer-top-bar { flex-direction: column; gap: 20px; text-align: center; }
+            .footer-brand { flex-direction: column; gap: 10px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PEVNÁ NAVIGAČNÍ LIŠTA -->
+    <header class="rybar-navbar-header">
+        <div class="rybar-navbar-container">
+            <div class="rybar-navbar-logo">
+                <a href="/">
+                    <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="Majnuj Logo">
+                </a>
+            </div>
+            <nav class="rybar-navbar-menu">
+               <a href="/" class="nav-item">Domů</a>
+               <a href="/wiki" class="nav-item">Wiki</a>
+               <a href="https://discord.com/invite/n7PsVuE2Pu" target="_blank" class="nav-item">Discord</a>
+               <a href="/pravidla" class="nav-item">Pravidla</a>
+               <a href="/tym" class="nav-item">Tým</a>
+            </nav>
+            <div class="rybar-navbar-action">
+                <a href="https://majnuj.eu/obchod" class="nav-btn-shop">Obchod</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HLAVNÍ OBSAH -->
+    <main class="gr-ticket-wrapper">
         
-        <div class="gr-ticket-logo-wrapper">
-            <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="GameRealms Logo" class="gr-ticket-logo">
+        <div class="gr-ticket-hero">
+            <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="Majnuj Logo" class="gr-ticket-hero-logo">
+            <h1 class="gr-ticket-title">Centrum podpory &amp; Tickety</h1>
+            <p class="gr-ticket-subtitle">
+                Máš problém ve hře, nepřišly ti zakoupené položky, nebo chceš nahlásit porušování pravidel? 
+                Vyber si správnou kategorii. Naše administrátorské týmy se tvému požadavku budou plně věnovat.
+            </p>
         </div>
 
-        <h1 class="gr-ticket-title">Centrum podpory &amp; Pomoci</h1>
-        <p class="gr-ticket-subtitle">
-            Máš problém ve hře, nefunkční VIP výhody, nebo chceš nahlásit porušování pravidel? 
-            Vyber si správnou kategorii níže. Naše administrátorské týmy se tvému požadavku budou plně věnovat.
-        </p>
-
+        <!-- KROK 1: VÝBĚR TYPU TICKETU -->
         <div id="ticket-step-categories" class="gr-ticket-grid">
             
             <div class="gr-category-card" onclick="selectCategory('Hráčský problém / Hlášení')">
                 <div class="category-icon-box">⚠️</div>
-                <h3>Problém &amp; Porušení pravidel</h3>
-                <p>Nahlášení cheaterů, toxických hráčů, griefu krajiny, chyb v pluginech nebo nefunkčních herních příkazů na našich serverech.</p>
+                <h3>Problém &amp; Hlášení</h3>
+                <p>Nahlášení cheaterů, griefu staveb, chyb v pluginech nebo nefunkčních herních příkazů.</p>
                 <span class="card-action-text">Otevřít formulář →</span>
             </div>
 
             <div class="gr-category-card" onclick="selectCategory('Problém s platbou / Obchod')">
                 <div class="category-icon-box">💰</div>
-                <h3>Platby &amp; VIP Store</h3>
-                <p>Problémy s nákupem klíčů, herních hodností (VIP), chybné platby kartou/SMS nebo nepřipsání zakoupených herních mincí.</p>
+                <h3>Platby &amp; Obchod</h3>
+                <p>Problémy s nákupem VIP, klíčů, chybné platby kartou/SMS nebo nepřipsání bodů.</p>
                 <span class="card-action-text">Otevřít formulář →</span>
             </div>
 
             <div class="gr-category-card" onclick="selectCategory('Dotaz / Jiné')">
                 <div class="category-icon-box">❓</div>
-                <h3>Obecný dotaz / Ostatní</h3>
-                <p>Nenašel jsi svou sekci? Potřebuješ poradit ohledně mechanik, eventů, podskupin nebo máš návrh na zlepšení chodu projektu?</p>
+                <h3>Obecný dotaz</h3>
+                <p>Potřebuješ s něčím poradit, máš dotaz ohledně serveru nebo návrh na zlepšení projektu.</p>
                 <span class="card-action-text">Otevřít formulář →</span>
             </div>
 
         </div>
 
+        <!-- KROK 2: FORMULÁŘ TICKETU -->
         <div id="ticket-step-form" class="gr-ticket-form-wrapper" style="display: none;">
             
             <div class="gr-form-header">
                 <button type="button" class="btn-back" onclick="goBackToCategories()">
                     <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                    Zpět na výběr kategorií
+                    Zpět na výběr sekce
                 </button>
-                <div class="selected-badge">Sekce podpory: <span id="current-category">---</span></div>
+                <div class="selected-badge">Sekce: <span id="current-category">---</span></div>
             </div>
 
             <div class="gr-form-info-notice">
-                <strong>Oznámení:</strong> Po odeslání ticketu obdrží náš Admin Tým upozornění na Discordu. Jakmile ticket potvrdíme, spustí se garantovaná lhůta <strong>48 hodin</strong> na vyřešení tvé žádosti.
+                <strong>Oznámení:</strong> Po odeslání ticketu obdrží náš Admin Tým upozornění na Discordu. Od chvíle, kedy administrátor potvrdí zpracování ticketu (označí fajfkou), se spouští garantovaná doba <strong>48 hodin</strong> na plné vyřešení tvého případu.
             </div>
 
             <form id="gr-actual-form" onsubmit="sendTicketToDiscord(event)">
@@ -55,82 +803,245 @@
                 <input type="hidden" id="form-category" name="category">
 
                 <div class="gr-form-row-half">
+                    <!-- Minecraft Nick -->
                     <div class="gr-ticket-input">
                         <label for="mc-nick">Minecraft Nickname <span class="required-star">*</span></label>
-                        <input type="text" id="mc-nick" required placeholder="Zadej svůj přesný herní nick">
-                        <span class="input-help">Zadej jméno, pod kterým hraješ, abychom tě našli v logách serveru.</span>
+                        <input type="text" id="mc-nick" required placeholder="Tvůj nick ve hře">
+                        <span class="input-help">Uveď jméno, pod kterým hraješ na serveru.</span>
                     </div>
 
+                    <!-- Discord Nick -->
                     <div class="gr-ticket-input">
-                        <label for="dc-nick">Discord uživatelské jméno <span class="optional">(Nepovinné)</span></label>
-                        <input type="text" id="dc-nick" placeholder="Např. tvujnick nebo stary_format#1234">
-                        <span class="input-help">Pokud vyplníš, můžeme tě v případě potřeby kontaktovat přímo přes PM.</span>
+                        <label for="dc-nick">Discord Nick <span class="optional">(Nepovinné)</span></label>
+                        <input type="text" id="dc-nick" placeholder="Např. herní_nick">
+                        <span class="input-help">Uveď jméno pro možnost přímého kontaktu na Discordu.</span>
                     </div>
                 </div>
 
+                <!-- E-mail -->
                 <div class="gr-ticket-input">
                     <label for="ticket-email">E-mailová adresa <span class="required-star">*</span></label>
-                    <input type="email" id="ticket-email" required placeholder="Zadej svůj kontaktní e-mail">
-                    <span class="input-help">Sem ti dorazí finální vyjádření od vedení serveru nebo potvrzení o vyřešení.</span>
+                    <input type="email" id="ticket-email" required placeholder="Zadej kontaktní e-mail">
+                    <span class="input-help">Sem ti zašleme potvrzení nebo doplňující otázky.</span>
                 </div>
 
+                <!-- Popis problému -->
                 <div class="gr-ticket-input">
-                    <label for="ticket-reason">Detailní popis situace / Důvod žádosti <span class="required-star">*</span></label>
-                    <textarea id="ticket-reason" rows="6" required placeholder="Popiš nám situaci co nejdetailněji. Pokud máš důkazy (odkazy na screenshoty/videa), vlož je sem také..."></textarea>
-                    <span class="input-help">Čím podrobnější popis nám poskytneš, tím rychleji dokážeme tvůj problém zkontrolovat.</span>
+                    <label for="ticket-reason">Popis problému / Důvod ticketu <span class="required-star">*</span></label>
+                    <textarea id="ticket-reason" rows="6" required placeholder="Zde podrobně popiš, co potřebuješ vyřešit. Vlož případně odkazy na screenshoty / videa..."></textarea>
+                    <span class="input-help">Uveď co nejvíce detailů pro rychlejší vyřešení.</span>
                 </div>
 
-                <button type="submit" id="btn-submit-ticket" class="btn-ticket-submit">Odeslat závazný ticket</button>
+                <!-- Tlačítko odeslat -->
+                <button type="submit" id="btn-submit-ticket" class="btn-ticket-submit">Odeslat ticket</button>
             </form>
             
+            <!-- HISTORIE A SLEDování (Po odeslání) -->
             <div id="ticket-success-msg" class="ticket-status-msg success" style="display: none;">
                 <div class="success-icon">✔</div>
                 <h3>Ticket úspěšně doručen!</h3>
-                <p>Tvá žádost byla zapsána do systému a odeslána na náš Discord. Od chvíle, kdy administrátor potvrdí zpracování (označí fajfkou), začíná odpočet 48 hodin na vyřešení.</p>
+                <p class="status-sub">Tvoje žádost byla doručena na náš Discord. Sleduj průběžný stav níže.</p>
+
+                <!-- Živá časová osa stavu -->
+                <div class="ticket-live-timeline">
+                    <div class="timeline-progress-line" id="timeline-line"></div>
+                    
+                    <div class="timeline-step completed">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Odesláno</div>
+                    </div>
+                    <div class="timeline-step active" id="step-discord">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Čeká na schválení</div>
+                    </div>
+                    <div class="timeline-step" id="step-countdown">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Řešení (48h)</div>
+                    </div>
+                </div>
+
+                <!-- Časovač -->
+                <div class="countdown-display-box">
+                    <div class="countdown-title">Garantovaná lhůta na vyřešení</div>
+                    <div class="countdown-timer-text" id="countdown-timer">48:00:00</div>
+                </div>
             </div>
         </div>
 
-    </div>
-</section>
+    </main>
 
-<script>
-    // ZDE NAHRADÍŠ ZA SVŮJ DISCORD WEBHOOK URL
-    const DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1514337149225271539/IaAblYraHaonnrseGXx5O5edj-9sZh1435stEFCTc-EYI3CVmL-irOFhw7heBMEJJLCr";
+    <!-- FOOTER PATIČKA -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            
+            <div class="footer-top-bar">
+                <div class="footer-brand">
+                    <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="Majnuj.eu Logo" class="footer-logo" style="border-radius: 8px;">
+                    <div class="brand-text">
+                        <h3>MAJNUJ.EU</h3>
+                        <p>JSME SERVER, KTERÝ MÁ ROZHODNĚ CO NABÍDNOUT.</p>
+                    </div>
+                </div>
+                
+                <div class="footer-socials">
+                    <a href="https://discord.com/invite/n7PsVuE2Pu" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                    <a href="https://www.instagram.com/majnuj.eu/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@majnuj.eu" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.youtube.com/@MajnujEU" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
 
-    function selectCategory(categoryName) {
-        document.getElementById('current-category').innerText = categoryName;
-        document.getElementById('form-category').value = categoryName;
-        
-        document.getElementById('ticket-step-categories').style.display = 'none';
-        document.getElementById('ticket-step-form').style.display = 'block';
-        
-        document.getElementById('gr-actual-form').style.display = 'block';
-        document.getElementById('ticket-success-msg').style.display = 'none';
-    }
+            <div class="footer-grid">
+                
+                <div class="footer-col footer-about">
+                    <h4>O MAJNUJ.EU</h4>
+                    <p>
+                        Majnuj.eu je server s bohatou historií a moderními technologiemi. Snažíme se o to, abychom vám nabídli skvělý zážitek ze hry a spoustu nezapomenutelných zážitků. U nás si můžeš zahrát Survival, Skyblock, Oneblock nebo naskočit do akčních PvP miniher. 🎮🚀
+                    </p>
+                    <p class="disclaimer">Nejedná se o oficiální produkt Minecraftu. Nejsme spojeni s Mojang Studios.</p>
+                </div>
 
-    function goBackToCategories() {
-        document.getElementById('ticket-step-form').style.display = 'none';
-        document.getElementById('ticket-step-categories').style.display = 'grid';
-    }
+                <div class="footer-col footer-links">
+                    <h4>NAVIGACE</h4>
+                    <ul>
+                        <li><a href="/">O Majnuj.eu</a></li>
+                        <li><a href="/pravidla">Pravidla</a></li>
+                        <li><a href="/tym">Tým</a></li>
+                    </ul>
+                </div>
 
-    function sendTicketToDiscord(event) {
-        event.preventDefault();
+                <div class="footer-col footer-legal">
+                    <h4>KONTAKTY</h4>
+                    <p>E-mail: <a href="mailto:info@majnuj.eu">info@majnuj.eu</a></p>
+                </div>
 
-        const btnSubmit = document.getElementById('btn-submit-ticket');
-        btnSubmit.innerText = "Zpracovávám a odesílám...";
-        btnSubmit.disabled = true;
+            </div>
 
-        const kategoria = document.getElementById('form-category').value;
-        const mcNick = document.getElementById('mc-nick').value;
-        const dcNick = document.getElementById('dc-nick').value || "Nezadáno";
-        const email = document.getElementById('ticket-email').value;
-        const duvod = document.getElementById('ticket-reason').value;
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2026 Majnuj.eu</p>
+            </div>
 
-        const discordPayload = {
-            embeds: [{
-                title: "📩 NOVÝ WEB TICKET ZAREGISTROVÁN",
-                color: 6118388, // #5d5bf4 převedeno na int
-                description: "Pro spuštění odpočtu 48 hodin a potvrzení ticketu přidejte pod tuto zprávu reakci fajfky ✅.",
-                fields: [
-                    { name: "📂 Sekce podpory", value: "
-http://googleusercontent.com/immersive_entry_chip/0
+        </div>
+    </footer>
+
+    <!-- INTERAKTIVNÍ SKRIPTY, WEBHOOK A ČASOVAČ LHŮTY -->
+    <script>
+        // TVŮJ AKTIVNÍ DISCORD WEBHOOK URL
+        const DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1514337149225271539/IaAblYraHaonnrseGXx5O5edj-9sZh1435stEFCTc-EYI3CVmL-irOFhw7heBMEJJLCr";
+
+        function selectCategory(categoryName) {
+            document.getElementById('current-category').innerText = categoryName;
+            document.getElementById('form-category').value = categoryName;
+            
+            document.getElementById('ticket-step-categories').style.display = 'none';
+            document.getElementById('ticket-step-form').style.display = 'block';
+            
+            document.getElementById('gr-actual-form').style.display = 'block';
+            document.getElementById('ticket-success-msg').style.display = 'none';
+        }
+
+        function goBackToCategories() {
+            document.getElementById('ticket-step-form').style.display = 'none';
+            document.getElementById('ticket-step-categories').style.display = 'grid';
+        }
+
+        function sendTicketToDiscord(event) {
+            event.preventDefault();
+
+            const btnSubmit = document.getElementById('btn-submit-ticket');
+            btnSubmit.innerText = "Odesílám do systému...";
+            btnSubmit.disabled = true;
+
+            const kategoria = document.getElementById('form-category').value;
+            const mcNick = document.getElementById('mc-nick').value;
+            const dcNick = document.getElementById('dc-nick').value || "Nezadáno";
+            const email = document.getElementById('ticket-email').value;
+            const duvod = document.getElementById('ticket-reason').value;
+
+            // Příprava bohatého embedu na Discord s hex-kódováním zpětných apostrofů (\x60), které brání pádu parseru
+            const discordPayload = {
+                embeds: [{
+                    title: "📩 NOVÝ TICKET VYTVOŘEN NA WEBU",
+                    color: 6118388, // Fialová barva (#5d5bf4)
+                    description: "Přidejte k této zprávě reakci fajfky ✅, abyste potvrdili přijetí ticketu a zahájili odpočet garantované lhůty 48 hodin.",
+                    fields: [
+                        { name: "🗂 Sekce podpory", value: "\x60\x60\x60" + kategoria + "\x60\x60\x60", inline: false },
+                        { name: "🎮 Minecraft Nickname", value: "\x60" + mcNick + "\x60", inline: true },
+                        { name: "💬 Discord Nick", value: "\x60" + dcNick + "\x60", inline: true },
+                        { name: "📧 Kontaktní E-mail", value: "\x60" + email + "\x60", inline: false },
+                        { name: "📝 Popis situace / Důvod", value: duvod, inline: false }
+                    ],
+                    footer: { text: "Majnuj.eu Ticket System • Klikněte na ✅ pro přijetí ticketu" },
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            // Odeslání zprávy přes Webhook na Discord
+            fetch(DISCORD_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(discordPayload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Úspěšné doručení - skryjeme formulář a ukážeme timeline a simulovaný odpočet
+                    document.getElementById('gr-actual-form').style.display = 'none';
+                    document.getElementById('ticket-success-msg').style.display = 'block';
+                    startSimulatedTicketFlow();
+                } else {
+                    alert("Nastala chyba při odesílání na Discord. Zkontrolujte prosím stav.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Chyba spojení. Zkontrolujte připojení k internetu.");
+            })
+            .finally(() => {
+                btnSubmit.innerText = "Odeslat ticket";
+                btnSubmit.disabled = false;
+            });
+        }
+
+        // SIMULACE REÁLNÉHO PRŮBĚHU SCHVALOVÁNÍ TICKETU ADMINEM
+        function startSimulatedTicketFlow() {
+            const timelineLine = document.getElementById('timeline-line');
+            const stepDiscord = document.getElementById('step-discord');
+            const stepCountdown = document.getElementById('step-countdown');
+            const countdownTimer = document.getElementById('countdown-timer');
+
+            // 1. Po 4 vteřinách simulujeme, že admin na Discordu klikl na fajfku "✅" (přijal ticket do řešení)
+            setTimeout(() => {
+                // Přepojovací čára se natáhne na 100%
+                timelineLine.style.width = "80%";
+                
+                // Změna stavů kroků na timeline
+                stepDiscord.classList.remove('active');
+                stepDiscord.classList.add('completed');
+                
+                stepCountdown.classList.add('active');
+
+                // 2. Spustíme 48hodinový odpočítávací časovač
+                let totalSeconds = 48 * 60 * 60; // 48 hodin v sekundách
+                
+                const interval = setInterval(() => {
+                    totalSeconds--;
+                    if (totalSeconds <= 0) {
+                        clearInterval(interval);
+                        countdownTimer.innerText = "00:00:00";
+                        return;
+                    }
+
+                    const hrs = Math.floor(totalSeconds / 3600);
+                    const mins = Math.floor((totalSeconds % 3600) / 60);
+                    const secs = totalSeconds % 60;
+
+                    // Formátování času s nulami na začátku (např. 09:05:04)
+                    const formatTime = (val) => String(val).padStart(2, '0');
+                    countdownTimer.innerText = `${formatTime(hrs)}:${formatTime(mins)}:${formatTime(secs)}`;
+                }, 1000);
+
+            }, 4000); // 4 vteřiny čekání na přijetí (pro skvělý vizuální efekt)
+        }
+    </script>
+</body>
+</html>
