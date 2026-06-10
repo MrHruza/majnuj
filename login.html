@@ -1,241 +1,212 @@
-<section class="login-section">
-    <div class="login-container">
+<section class="gr-login-section">
+    <div class="gr-login-box">
         
-        <div class="login-logo-wrapper">
-            <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="GameRealms Logo" class="login-logo">
+        <div class="gr-logo-container">
+            <img src="https://github.com/user-attachments/assets/a9ccd4a1-d413-4bf6-add4-5685f5153ea8" alt="GameRealms Logo" class="gr-logo-img">
         </div>
 
-        <h1 class="login-title">Přihlášení na web</h1>
-        <p class="login-subtitle">Přihlaš se pomocí stejných údajů jako ve hře.</p>
-        
-        <div class="login-info-box">
-            <span class="info-icon">ℹ</span>
-            <p>Ještě nemáš účet? Připoj se na server <strong>majnuj.eu</strong> a napiš do chatu: <br><code class="cmd-highlight">/register [heslo] [heslo]</code></p>
-        </div>
+        <h2 class="gr-login-title">Přihlášení na web</h2>
+        <p class="gr-login-subtitle">Přihlaš se pomocí stejných údajů jako ve hře</p>
 
-        <form class="login-form" action="/login" method="POST">
+        <form class="gr-form" action="/login" method="POST">
             
-            <div class="input-group">
-                <input type="text" id="minecraft-nick" name="username" required placeholder=" ">
-                <label for="minecraft-nick">Minecraft nick</label>
+            <div class="gr-input-wrapper">
+                <input type="text" id="gr-nick" name="username" required placeholder="Minecraft nick">
             </div>
 
-            <div class="input-group">
-                <input type="password" id="minecraft-password" name="password" required placeholder=" ">
-                <label for="minecraft-password">Heslo</label>
-                <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
+            <div class="gr-input-wrapper input-password-wrapper">
+                <input type="password" id="gr-pass" name="password" required placeholder="Heslo">
+                <button type="button" class="gr-password-toggle" onclick="togglePassword()" aria-label="Zobrazit heslo">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 </button>
             </div>
 
-            <div class="login-options">
-                <label class="remember-me">
-                    <input type="checkbox" name="remember">
-                    <span class="checkmark"></span>
-                    Zůstat přihlášen
-                </label>
-                <a href="#zapomenute-heslo" class="forgot-password">Zapomněl jsi heslo?</a>
+            <div class="gr-forgot-row">
+                <a href="#zapomenute-heslo" class="gr-link-forgot">Zapomněl jsi heslo?</a>
             </div>
 
-            <button type="submit" class="btn-login-submit">Přihlásit se</button>
-            
+            <div class="gr-bottom-row">
+                <label class="gr-checkbox-label">
+                    <input type="checkbox" name="remember">
+                    <span class="gr-custom-checkbox"></span>
+                    Zůstat přihlášen
+                </label>
+            </div>
+
+            <button type="submit" class="gr-btn-submit">Přihlásit se</button>
+
         </form>
     </div>
 </section>
 
 <script>
-    function togglePasswordVisibility() {
-        const passwordInput = document.getElementById('minecraft-password');
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
+    function togglePassword() {
+        const passwordInput = document.getElementById('gr-pass');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
     }
 </script>
 
 <style>
-    .login-section {
-        min-height: 80vh;
-        padding: 40px 20px;
-        background-color: #14141c; /* Tmavé pozadí odpovídající screenshotům */
+    /* Import fontu Montserrat, pokud ho ještě na webu nemáš */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+    .gr-login-section {
+        min-height: 85vh;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #111116; /* Velmi tmavé pozadí celého webu */
+        padding: 40px 20px;
         font-family: 'Montserrat', sans-serif;
     }
 
-    .login-container {
-        background-color: #1a1a24; /* Barva boxu z předlohy */
-        border: 1px solid rgba(255, 255, 255, 0.03);
-        border-radius: 16px;
-        padding: 40px;
+    .gr-login-box {
+        background-color: #1a1a26; /* Tmavě fialovo-šedý box přesně podle screenshotu */
+        border-radius: 18px;
         width: 100%;
-        max-width: 450px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        max-width: 420px;
+        padding: 40px 35px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
         text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.02);
     }
 
-    .login-logo-wrapper {
-        margin-bottom: 20px;
-    }
-
-    .login-logo {
-        height: 75px;
-        width: auto;
-    }
-
-    .login-title {
-        color: #ffffff;
-        font-size: 1.4rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        margin: 0 0 8px 0;
-        letter-spacing: 0.5px;
-    }
-
-    .login-subtitle {
-        color: #a0aec0;
-        font-size: 0.85rem;
-        margin: 0 0 20px 0;
-        font-weight: 500;
-    }
-
-    /* Nápověda ohledně registrace na serveru */
-    .login-info-box {
-        background-color: rgba(88, 101, 242, 0.1);
-        border-left: 3px solid #5865F2;
-        border-radius: 6px;
-        padding: 12px 15px;
+    .gr-logo-container {
         margin-bottom: 25px;
         display: flex;
-        align-items: flex-start;
-        text-align: left;
-        gap: 10px;
+        justify-content: center;
     }
 
-    .login-info-box p {
-        margin: 0;
-        color: #cbd5e0;
-        font-size: 0.8rem;
-        line-height: 1.4;
+    .gr-logo-img {
+        height: 90px;
+        width: auto;
+        filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
     }
 
-    .info-icon {
-        color: #5865F2;
-        font-weight: bold;
-        font-size: 0.95rem;
+    .gr-login-title {
+        color: #ffffff;
+        font-size: 1.35rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin: 0 0 6px 0;
     }
 
-    .cmd-highlight {
-        background-color: rgba(0, 0, 0, 0.3);
-        color: #ffcc00;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-family: monospace;
+    .gr-login-subtitle {
+        color: #a0aec0;
         font-size: 0.85rem;
-        display: inline-block;
-        margin-top: 4px;
+        font-weight: 500;
+        margin: 0 0 30px 0;
     }
 
-    .login-form {
+    .gr-form {
         display: flex;
         flex-direction: column;
-        gap: 20px;
     }
 
-    /* Animované plovoucí popisky (Floating Labels) */
-    .input-group {
+    .gr-input-wrapper {
         position: relative;
-        width: 100%;
+        margin-bottom: 16px;
     }
 
-    .input-group input {
+    /* Herní tmavý design vstupních polí */
+    .gr-input-wrapper input {
         width: 100%;
-        padding: 14px 16px;
-        background-color: #ffffff;
-        color: #1a1a24;
+        background-color: #ffffff; /* Čistě bílá políčka pro maximální čitelnost z předlohy */
+        color: #111116;
         border: 2px solid transparent;
-        border-radius: 8px;
+        padding: 14px 16px;
+        border-radius: 10px;
+        font-family: 'Montserrat', sans-serif;
         font-size: 0.9rem;
         font-weight: 600;
         box-sizing: border-box;
         outline: none;
-        transition: border-color 0.2s ease;
-    }
-
-    /* Úprava pravého paddingu u hesla kvůli tlačítku oka */
-    .input-group input[type="password"],
-    .input-group input[type="text"] {
-        padding-right: 45px;
-    }
-
-    .input-group label {
-        position: absolute;
-        left: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #718096;
-        font-size: 0.9rem;
-        font-weight: 600;
-        pointer-events: none;
         transition: all 0.2s ease;
     }
 
-    /* Efekt zvednutí popisku při kliknutí nebo když je pole plné */
-    .input-group input:focus ~ label,
-    .input-group input:not(:placeholder-shown) ~ label {
-        top: -8px;
-        left: 10px;
-        font-size: 0.75rem;
-        background-color: #5865F2; /* Fialovo-modrá barva štítku */
-        color: #ffffff;
-        padding: 2px 8px;
-        border-radius: 4px;
+    /* Padding zprava pro políčko s heslem kvůli oku */
+    .input-password-wrapper input {
+        padding-right: 48px;
     }
 
-    .input-group input:focus {
-        border-color: #5865F2;
+    /* Fialový glow efekt při kliknutí na políčko */
+    .gr-input-wrapper input:focus {
+        border-color: #512da8;
+        box-shadow: 0 0 12px rgba(81, 45, 168, 0.4);
     }
 
-    /* Tlačítko pro skrytí/zobrazení hesla */
-    .toggle-password {
+    /* Stylování placeholderu */
+    .gr-input-wrapper input::placeholder {
+        color: #718096;
+        font-weight: 500;
+    }
+
+    /* Tlačítko oka pro zobrazení hesla */
+    .gr-password-toggle {
         position: absolute;
-        right: 12px;
+        right: 14px;
         top: 50%;
         transform: translateY(-50%);
         background: none;
         border: none;
         color: #718096;
         cursor: pointer;
-        padding: 5px;
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 4px;
+        transition: color 0.2s;
     }
 
-    .toggle-password:hover {
-        color: #1a1a24;
+    .gr-password-toggle:hover {
+        color: #111116;
     }
 
-    /* Možnosti pod poli (Zapomenuté heslo, checkbox) */
-    .login-options {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.8rem;
+    /* Řádek pro zapomenuté heslo */
+    .gr-forgot-row {
+        text-align: right;
+        margin-top: -6px;
+        margin-bottom: 20px;
+    }
+
+    .gr-link-forgot {
+        color: #5b5bf4; /* Světle fialovo-modrá barva odkazu */
+        font-size: 0.78rem;
         font-weight: 600;
-        margin-top: -5px;
+        text-decoration: none;
+        transition: color 0.2s;
     }
 
-    .remember-me {
+    .gr-link-forgot:hover {
+        color: #7a7af8;
+        text-decoration: underline;
+    }
+
+    /* Spodní řádek s checkboxem */
+    .gr-bottom-row {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    /* Custom Checkbox design */
+    .gr-checkbox-label {
         display: flex;
         align-items: center;
-        color: #a0aec0;
+        color: #ffffff;
+        font-size: 0.82rem;
+        font-weight: 600;
         cursor: pointer;
-        position: relative;
-        padding-left: 22px;
         user-select: none;
+        position: relative;
     }
 
-    .remember-me input {
+    .gr-checkbox-label input {
         position: absolute;
         opacity: 0;
         cursor: pointer;
@@ -243,22 +214,24 @@
         width: 0;
     }
 
-    .checkmark {
-        position: absolute;
-        left: 0;
-        height: 14px;
-        width: 14px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 3px;
+    .gr-custom-checkbox {
+        height: 16px;
+        width: 16px;
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        margin-right: 10px;
+        display: inline-block;
+        position: relative;
+        transition: all 0.2s;
     }
 
-    .remember-me input:checked ~ .checkmark {
-        background-color: #5865F2;
-        border-color: #5865F2;
+    .gr-checkbox-label input:checked ~ .gr-custom-checkbox {
+        background-color: #5b5bf4;
+        border-color: #5b5bf4;
     }
 
-    .checkmark::after {
+    .gr-custom-checkbox::after {
         content: "";
         position: absolute;
         display: none;
@@ -271,44 +244,35 @@
         transform: rotate(45deg);
     }
 
-    .remember-me input:checked ~ .checkmark::after {
+    .gr-checkbox-label input:checked ~ .gr-custom-checkbox::after {
         display: block;
     }
 
-    .forgot-password {
-        color: #5865F2;
-        text-decoration: none;
-        transition: color 0.2s ease;
-    }
-
-    .forgot-password:hover {
-        color: #7b85f5;
-        text-decoration: underline;
-    }
-
-    /* Odesílací tlačítko */
-    .btn-login-submit {
+    /* Hlavní fialovo-modré odesílací tlačítko */
+    .gr-btn-submit {
         background-color: #ffffff;
-        color: #5865F2;
+        color: #5b5bf4; /* Modro fialový text */
         border: none;
-        border-radius: 8px;
-        padding: 14px;
+        padding: 15px;
+        border-radius: 10px;
+        font-family: 'Montserrat', sans-serif;
         font-size: 0.9rem;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         cursor: pointer;
+        transition: all 0.2s ease;
         width: 100%;
-        transition: background-color 0.2s ease, transform 0.2s ease;
-        margin-top: 5px;
+        box-shadow: 0 4px 15px rgba(91, 91, 244, 0.15);
     }
 
-    .btn-login-submit:hover {
+    .gr-btn-submit:hover {
         background-color: #e2e8f0;
         transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(91, 91, 244, 0.25);
     }
 
-    .btn-login-submit:active {
+    .gr-btn-submit:active {
         transform: translateY(0);
     }
 </style>
